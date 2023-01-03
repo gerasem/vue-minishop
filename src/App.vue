@@ -1,11 +1,10 @@
-<script setup></script>
+<script setup>
+import vHeader from "@/components/vHeader.vue";
+</script>
 
 <template>
-  <p>asd</p>
-  {{ $t("title") }}
+  <v-header> </v-header>
   <router-view />
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
