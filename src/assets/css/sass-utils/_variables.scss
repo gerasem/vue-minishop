@@ -1,0 +1,51 @@
+$color-text: #1e1e1e;
+$color-icons: #787878;
+$color-primary: #eb3e7d;
+$color-secondary: #dfa44c;
+$text-muted: #aaa;
+$background-gray: #f7f7f7;
+$color-separator: #f0f0f0;
+$color-primary-opacity: rgba(235, 62, 125, 0.1);
+
+// bootstrap colors
+$theme-colors: (
+  "primary": $color-primary,
+  "secondary": $color-secondary,
+  //"success":    $success,
+  //"info":       $info,
+  //"warning":    $warning,
+  //"danger":     $danger,
+  //"light":      $light,
+  //"dark":       $dark,,
+);
+
+// breakpoints
+$screen-sm-max: 576px;
+$screen-md-max: 768px;
+$screen-lg-max: 992px;
+$screen-xl-max: 1200px;
+
+:root {
+  --pol-a: 15px;
+  --pol-b: calc(100% - var(--pol-a));
+  @media (max-width: $screen-md-max) {
+    --pol-a: 10px;
+    --pol-b: calc(100% - var(--pol-a));
+  }
+}
+
+$clip-path: polygon(
+  var(--pol-a) 0%,
+  var(--pol-b) 0%,
+  100% var(--pol-a),
+  100% var(--pol-b),
+  var(--pol-b) 100%,
+  var(--pol-a) 100%,
+  0% var(--pol-b),
+  0% var(--pol-a)
+);
+
+// overwrite standard bootstrap variables
+$border-radius: 0;
+$border-color: #ebebeb;
+$font-weight-bold: 600;
