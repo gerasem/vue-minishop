@@ -3,6 +3,7 @@
 
 <template>
  <p>asd</p>
+ {{$t('title')}}
 </template>
 
 <style lang="scss" scoped>

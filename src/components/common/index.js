@@ -1,5 +1,5 @@
-import AppButton from "./AppButton.vue";
-import AppIcon from "./AppIcon.vue";
-import AppInput from "./AppInput.vue";
+import UiButton from "./UiButton.vue";
+import UiIcon from "./UiIcon.vue";
+import UiInput from "./UiInput.vue";
 
-export default [AppButton, AppIcon, AppInput];
+export default [UiButton, UiIcon, UiInput];
