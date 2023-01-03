@@ -1,13 +1,11 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
- <p>asd</p>
- {{$t('title')}}
+  <p>asd</p>
+  {{ $t("title") }}
+  <router-view />
 </template>
 
 <style lang="scss" scoped>
-p {
-  color: $color-primary
-}
+
 </style>

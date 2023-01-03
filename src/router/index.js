@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { setI18nLanguage, loadLocaleMessages, SUPPORT_LOCALES } from "@/i18n";
-import Home from "@/views/Home.vue";
+import Main from "@/pages/Main.vue";
 
 function load(component) {
-  return () => import(/* @vite-ignore */ `../views/${component}.vue`);
+  return () => import(/* @vite-ignore */ `../pages/${component}.vue`);
 }
 
 export function setupRouter(i18n) {
@@ -20,7 +20,7 @@ export function setupRouter(i18n) {
         {
           path: "",
           name: "home",
-          component: Home,
+          component: Main,
         },
         {
           path: "cart",
@@ -30,12 +30,12 @@ export function setupRouter(i18n) {
         {
           path: "search",
           name: "search",
-          component: Home,
+          component: Main,
         },
         {
           path: "category/:category?",
           name: "category",
-          component: Home,
+          component: Main,
         },
         {
           path: ":pathMatch(.*)*",
