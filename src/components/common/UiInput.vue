@@ -11,6 +11,24 @@
         :class="{ active: modelValue }"
         :placeholder="placeholder"
       />
+
+      <template v-if="icon === 'search'">
+        <ui-icon
+          :icon="modelValue ? 'x-lg' : 'search'"
+          customClass="icon"
+          @click="handleClickOnIcon"
+        >
+        </ui-icon>
+      </template>
+
+      <template v-else>
+        <ui-icon
+          :icon="icon"
+          customClass="icon"
+          @click="handleClickOnIcon"
+        >
+        </ui-icon>
+      </template>
     </div>
   </div>
 </template>
@@ -18,5 +36,69 @@
 <script>
 export default {
   name: "UiInput",
+  props: {
+    icon: {
+      type: String,
+      default: "",
+      required: false,
+    },
+
+    modelValue: {
+      type: [String, Number],
+      required: true,
+    },
+
+    placeholder: {
+      type: String,
+      required: false,
+    },
+
+    description: {
+      type: String,
+      required: false,
+    },
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+.input {
+  height: 3.125rem;
+
+  &:hover,
+  &:focus,
+  &.active {
+    box-shadow: none;
+    border-color: $color-secondary;
+  }
+
+  &__container {
+    position: relative;
+    display: flex;
+  }
+
+  &__field {
+    display: inline-flex;
+    width: 100%;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+
+  &__description {
+    margin-top: 0;
+    text-align: left;
+  }
+}
+
+.header__search {
+  margin-top: 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  width: auto;
+  & .input {
+    height: 2.5rem;
+    border: 0;
+    border-bottom: 1px solid $border-color;
+  }
+}
+</style>
