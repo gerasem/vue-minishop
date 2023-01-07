@@ -1,33 +1,66 @@
+<script setup>
+const props = defineProps({
+  icon: {
+    type: String,
+    default: "",
+    required: false,
+  },
+
+  modelValue: {
+    type: [String, Number],
+    required: true,
+  },
+
+  placeholder: {
+    type: String,
+    required: false,
+  },
+
+  description: {
+    type: String,
+    required: false,
+  },
+});
+
+function updateInput() {}
+
+function handleOnBlur() {}
+
+function handleClickOnIcon() {}
+</script>
+
 <template>
   <div class="input__field">
     <div class="input__container">
       <input
         type="text"
-        :value="modelValue"
+        :value="props.modelValue"
         @input="updateInput"
         @blur="handleOnBlur"
         @keydown.enter="handleOnBlur"
         class="form-control input"
-        :class="{ active: modelValue }"
+        :class="{ active: props.modelValue }"
         :placeholder="placeholder"
       />
 
-      <template v-if="icon === 'search'">
-        <ui-icon
-          :icon="modelValue ? 'x-lg' : 'search'"
-          customClass="icon"
-          @click="handleClickOnIcon"
-        >
-        </ui-icon>
-      </template>
+      <template v-if="props.icon">
+        <template v-if="props.icon === 'search'">
+          <ui-icon
+            :icon="props.modelValue ? 'x-lg' : 'search'"
+            customClass="icon"
+            @click="handleClickOnIcon"
+          >
+          </ui-icon>
+        </template>
 
-      <template v-else>
-        <ui-icon
-          :icon="icon"
-          customClass="icon"
-          @click="handleClickOnIcon"
-        >
-        </ui-icon>
+        <template v-else>
+          <ui-icon
+            :icon="props.icon"
+            customClass="icon"
+            @click="handleClickOnIcon"
+          >
+          </ui-icon>
+        </template>
       </template>
     </div>
   </div>
@@ -36,28 +69,6 @@
 <script>
 export default {
   name: "UiInput",
-  props: {
-    icon: {
-      type: String,
-      default: "",
-      required: false,
-    },
-
-    modelValue: {
-      type: [String, Number],
-      required: true,
-    },
-
-    placeholder: {
-      type: String,
-      required: false,
-    },
-
-    description: {
-      type: String,
-      required: false,
-    },
-  },
 };
 </script>
 

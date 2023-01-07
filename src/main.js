@@ -10,6 +10,8 @@ import { setupI18n } from "./i18n";
 import { setupRouter } from "./router";
 
 const app = createApp(App);
+app.config.devtools = true
+
 const i18n = setupI18n({
   globalInjection: true,
   legacy: false,
