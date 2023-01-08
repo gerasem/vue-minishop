@@ -22,11 +22,19 @@ const props = defineProps({
   },
 });
 
-function updateInput() {}
+const emit = defineEmits({ "update:modelValue": null });
+
+function updateInput(event) {
+  emit("update:modelValue", event.target.value);
+}
 
 function handleOnBlur() {}
 
-function handleClickOnIcon() {}
+function handleClickOnIcon() {
+  if (props.modelValue) {
+    emit("update:modelValue", "");
+  }
+}
 </script>
 
 <template>
@@ -80,7 +88,7 @@ export default {
   &:focus,
   &.active {
     box-shadow: none;
-    border-color: $color-secondary;
+    border-color: $color-secondary !important;
   }
 
   &__container {

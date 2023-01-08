@@ -1,3 +1,8 @@
+<script setup>
+import { ref } from "vue";
+const search = ref("");
+</script>
+
 <template>
   <header class="header__container">
     <div class="container-fluid">
