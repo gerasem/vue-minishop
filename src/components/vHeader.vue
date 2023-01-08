@@ -1,6 +1,27 @@
 <script setup>
 import { ref } from "vue";
 const search = ref("");
+
+import { useI18n } from "vue-i18n";
+import { useRouter, useRoute } from "vue-router";
+
+const { t, locale } = useI18n({ useScope: "global" });
+const router = useRouter();
+
+function setLocale(language) {
+  if (locale.value === language) return;
+  locale.value = language;
+  router.push({ params: { locale: language } });
+}
+
+function getLanguageClass(lang) {
+  console.log(lang, locale.value)
+  if (lang === locale.value) {
+    return "header__current-language";
+  } else {
+    return "header__second-language";
+  }
+}
 </script>
 
 <template>
@@ -20,7 +41,19 @@ const search = ref("");
         <div class="col flex-1"></div>
 
         <div class="col-auto">
-          <div class="header__languages">de / en</div>
+          <div class="header__languages">
+            <span
+              :class="getLanguageClass('de')"
+              @click="setLocale('de')"
+              >De</span
+            >
+            <span class="header__language-separator">/</span>
+            <span
+              :class="getLanguageClass('en')"
+              @click="setLocale('en')"
+              >En</span
+            >
+          </div>
         </div>
 
         <div class="col-auto">
@@ -92,6 +125,30 @@ const search = ref("");
     &:focus {
       background-color: $background-gray;
       text-decoration: none;
+    }
+  }
+
+  &__languages {
+    user-select: none;
+  }
+
+  &__current-language {
+    color: #c8c8c8;
+    cursor: not-allowed;
+  }
+
+  &__language-separator {
+    color: #ebebeb;
+    margin: 0 5px;
+  }
+
+  &__second-language {
+    color: $color-icons;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
     }
   }
 }
