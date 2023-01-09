@@ -11,7 +11,6 @@ import { setupRouter } from "./router";
 import { createPinia } from "pinia";
 
 const app = createApp(App);
-app.config.devtools = true;
 
 const i18n = setupI18n({
   globalInjection: true,

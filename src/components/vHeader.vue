@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
-const search = ref("");
-
+import { storeToRefs } from "pinia";
+import { useItemsStore } from "@/store/items";
 import { useI18n } from "vue-i18n";
 import { useRouter, useRoute } from "vue-router";
 
@@ -13,6 +13,8 @@ function setLocale(language) {
   locale.value = language;
   router.push({ params: { locale: language } });
 }
+
+const { search } = storeToRefs(useItemsStore());
 </script>
 
 <template>
