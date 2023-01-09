@@ -27,16 +27,16 @@ const minHeightForTotalCount = computed({
 <template>
   <div
     class="icon__container"
-    :class="{ 'icon__container--active': props.count > 0 }"
+    :class="{ 'icon__container--active': count > 0 }"
   >
     <i
       class="icon bi"
-      :class="`bi-${props.icon} icon--${props.customClass ?? props.icon}`"
+      :class="`bi-${icon} icon--${customClass ?? icon}`"
     >
     </i>
 
     <span
-      v-if="props.count"
+      v-if="count"
       class="icon__count"
       :style="minHeightForTotalCount"
     >

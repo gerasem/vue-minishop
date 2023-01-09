@@ -29,7 +29,7 @@ function getLanguageClass(lang) {
       <div class="row align-items-center">
         <div class="col-auto">
           <router-link
-            :to="{ name: 'home', params: { locale: this.$i18n.locale } }"
+            :to="{ name: 'home', params: { locale: $i18n.locale } }"
             class="header__logo"
           >
             Logo
@@ -57,7 +57,7 @@ function getLanguageClass(lang) {
 
         <div class="col-auto">
           <router-link
-            to="/"
+            :to="{ name: 'contact', params: { locale: $i18n.locale } }"
             class="header__contact"
           >
             Contact

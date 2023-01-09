@@ -38,6 +38,11 @@ export function setupRouter(i18n) {
           component: Main,
         },
         {
+          path: "contact",
+          name: "contact",
+          component: load("Contact"),
+        },
+        {
           path: ":pathMatch(.*)*",
           name: "NotFound",
           component: load("404"),

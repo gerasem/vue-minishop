@@ -42,19 +42,19 @@ function handleClickOnIcon() {
     <div class="input__container">
       <input
         type="text"
-        :value="props.modelValue"
+        :value="modelValue"
         @input="updateInput"
         @blur="handleOnBlur"
         @keydown.enter="handleOnBlur"
         class="form-control input"
-        :class="{ active: props.modelValue }"
+        :class="{ active: modelValue }"
         :placeholder="placeholder"
       />
 
-      <template v-if="props.icon">
-        <template v-if="props.icon === 'search'">
+      <template v-if="icon">
+        <template v-if="icon === 'search'">
           <ui-icon
-            :icon="props.modelValue ? 'x-lg' : 'search'"
+            :icon="modelValue ? 'x-lg' : 'search'"
             customClass="icon"
             @click="handleClickOnIcon"
           >
@@ -63,7 +63,7 @@ function handleClickOnIcon() {
 
         <template v-else>
           <ui-icon
-            :icon="props.icon"
+            :icon="icon"
             customClass="icon"
             @click="handleClickOnIcon"
           >
