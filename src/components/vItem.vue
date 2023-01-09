@@ -91,8 +91,10 @@ export default {
     width: 100%;
     clip-path: $clip-path;
     transition: 0.2s;
-
-    &:hover {
+    height: 260px;
+    object-fit: contain;
+    &:hover,
+    &:focus {
       transform: scale(1.05);
     }
   }
