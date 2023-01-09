@@ -8,6 +8,7 @@ import "primeicons/primeicons.css"; //icons primevue
 import "@/assets/css/main.scss";
 import { setupI18n } from "./i18n";
 import { setupRouter } from "./router";
+import { createPinia } from "pinia";
 
 const app = createApp(App);
 app.config.devtools = true;
@@ -27,4 +28,10 @@ uiComponents.forEach((component) => {
   app.component(component.name, component);
 });
 
-app.use(PrimeVue).use(ToastService).use(router).use(i18n).mount("#app");
+app
+  .use(createPinia())
+  .use(PrimeVue)
+  .use(ToastService)
+  .use(router)
+  .use(i18n)
+  .mount("#app");
