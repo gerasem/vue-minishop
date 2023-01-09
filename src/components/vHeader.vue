@@ -13,14 +13,6 @@ function setLocale(language) {
   locale.value = language;
   router.push({ params: { locale: language } });
 }
-
-function getLanguageClass(lang) {
-  if (lang === locale.value) {
-    return "header__current-language";
-  } else {
-    return "header__second-language";
-  }
-}
 </script>
 
 <template>
@@ -42,13 +34,15 @@ function getLanguageClass(lang) {
         <div class="col-auto">
           <div class="header__languages">
             <span
-              :class="getLanguageClass('de')"
+              :class="$i18n.locale === 'de' ? 'header__language--current' : ''"
+              class="header__language"
               @click="setLocale('de')"
               >De</span
             >
             <span class="header__language-separator">/</span>
             <span
-              :class="getLanguageClass('en')"
+              :class="$i18n.locale === 'en' ? 'header__language--current' : ''"
+              class="header__language"
               @click="setLocale('en')"
               >En</span
             >
@@ -131,23 +125,26 @@ function getLanguageClass(lang) {
     user-select: none;
   }
 
-  &__current-language {
-    color: #c8c8c8;
-    cursor: not-allowed;
-  }
-
   &__language-separator {
     color: #ebebeb;
     margin: 0 5px;
   }
 
-  &__second-language {
+  &__language {
     color: $color-icons;
     cursor: pointer;
 
     &:hover,
     &:focus {
       text-decoration: underline;
+    }
+    &--current {
+      color: #c8c8c8;
+      cursor: not-allowed;
+      &:hover,
+      &:focus {
+        text-decoration: none;
+      }
     }
   }
 }
