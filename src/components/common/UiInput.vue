@@ -111,8 +111,6 @@ export default {
 
 .header__search {
   margin-top: 0;
-  margin-left: 1rem;
-  margin-right: 1rem;
   width: auto;
   & .input {
     height: 2.5rem;

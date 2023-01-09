@@ -15,7 +15,6 @@ function setLocale(language) {
 }
 
 function getLanguageClass(lang) {
-  console.log(lang, locale.value)
   if (lang === locale.value) {
     return "header__current-language";
   } else {
