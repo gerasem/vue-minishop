@@ -15,6 +15,7 @@
     align-items: center;
     color: $text-muted;
     flex: 1;
+    height: calc(100vh - 100px);
   }
 }
 </style>

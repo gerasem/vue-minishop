@@ -11,6 +11,7 @@ export const useItemsStore = defineStore({
     search: "",
     items: [],
     categories: [],
+    selectedCategory: "",
     serverError: "",
   }),
 
@@ -32,23 +33,23 @@ export const useItemsStore = defineStore({
         this.loading = false;
       }
     },
-  },
 
-  async getCategories() {
-    this.loading = true;
-    if (this.categories.length) {
-      this.items = [];
-    }
-    try {
-      const response = await axios.get(`${fakeStoreUrl}/products/categories`);
-      if (response.status === 200) {
-        this.categories = response.data;
+    async getCategories() {
+      this.loading = true;
+      if (this.categories.length) {
+        this.items = [];
       }
-    } catch (error) {
-      this.serverError = error;
-      console.error(error);
-    } finally {
-      this.loading = false;
-    }
+      try {
+        const response = await axios.get(`${fakeStoreUrl}/products/categories`);
+        if (response.status === 200) {
+          this.categories = response.data;
+        }
+      } catch (error) {
+        this.serverError = error;
+        console.error(error);
+      } finally {
+        this.loading = false;
+      }
+    },
   },
 });

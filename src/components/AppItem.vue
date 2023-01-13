@@ -1,10 +1,14 @@
+<script setup>
+import imagePlaceholder from "@/assets/images/320x240.png";
+</script>
+
 <template>
   <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="item">
       <router-link to="/">
         <div class="item__image-container">
           <img
-            :src="item.image ?? previewImage"
+            :src="item.image ?? imagePlaceholder"
             :alt="item.title"
             class="img-fluid item__image"
           />
@@ -38,14 +42,6 @@
 
 <script>
 export default {
-  name: "vItem",
-
-  data() {
-    return {
-      previewImage: "@/assets/images/320x240.png",
-    };
-  },
-
   props: {
     item: {
       type: Object,
