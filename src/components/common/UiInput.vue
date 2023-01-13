@@ -24,17 +24,17 @@ const props = defineProps({
 
 const emit = defineEmits({ "update:modelValue": null });
 
-function updateInput(event) {
+const updateInput = (event) => {
   emit("update:modelValue", event.target.value);
-}
+};
 
-function handleOnBlur() {}
+const handleOnBlur = () => {};
 
-function handleClickOnIcon() {
+const handleClickOnIcon = () => {
   if (props.modelValue) {
     emit("update:modelValue", "");
   }
-}
+};
 </script>
 
 <template>

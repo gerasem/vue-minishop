@@ -1,5 +1,5 @@
 <script setup>
-import vHeader from "@/components/vHeader.vue";
+import AppHeader from "@/components/AppHeader.vue";
 import { watch, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
@@ -23,7 +23,7 @@ watch(router.currentRoute, (route) => {
 </script>
 
 <template>
-  <v-header> </v-header>
+  <app-header> </app-header>
   <router-view />
 </template>
 

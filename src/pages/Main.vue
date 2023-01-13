@@ -1,16 +1,16 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { useItemsStore } from "@/store/items";
-import vItem from "@/components/vItem.vue";
-import vLoading from "@/components/vLoading.vue";
+import AppItem from "@/components/AppItem.vue";
+import AppLoading from "@/components/AppLoading.vue";
 const { loading, search, items, serverError } = storeToRefs(useItemsStore());
-const { fetchAll } = useItemsStore();
-fetchAll();
+const { getHighlights } = useItemsStore();
+getHighlights();
 </script>
 
 <template>
   <template v-if="loading">
-    <v-loading></v-loading>
+    <app-loading></app-loading>
   </template>
   <Transition>
     <main
@@ -19,14 +19,14 @@ fetchAll();
     >
       <p v-if="serverError">{{ serverError }}</p>
 
-      <h1>Main</h1>
+      <h1>Highlights</h1>
 
       <div class="row">
         <template
           v-for="item in items"
           :key="item.id"
         >
-          <v-item :item="item"></v-item>
+          <app-item :item="item"></app-item>
         </template>
         <template v-if="!items.length">
           <div class="col">Items not found</div>

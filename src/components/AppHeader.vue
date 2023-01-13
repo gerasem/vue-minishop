@@ -1,18 +1,17 @@
 <script setup>
-import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useItemsStore } from "@/store/items";
 import { useI18n } from "vue-i18n";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 const { t, locale } = useI18n({ useScope: "global" });
 const router = useRouter();
 
-function setLocale(language) {
+const setLocale = (language) => {
   if (locale.value === language) return;
   locale.value = language;
   router.push({ params: { locale: language } });
-}
+};
 
 const { search } = storeToRefs(useItemsStore());
 </script>
@@ -26,8 +25,8 @@ const { search } = storeToRefs(useItemsStore());
             :to="{ name: 'home', params: { locale: $i18n.locale } }"
             class="header__logo"
           >
-            Logo
-            <span class="header__slogan">Lorem ipsum</span>
+            Demo Store
+            <span class="header__slogan">vue shopping cart</span>
           </router-link>
         </div>
 
