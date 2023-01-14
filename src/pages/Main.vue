@@ -5,7 +5,10 @@ import AppItem from "@/components/AppItem.vue";
 import AppLoading from "@/components/AppLoading.vue";
 import AppCategory from "@/components/AppCategory.vue";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+
 const router = useRouter();
+const { locale } = useI18n();
 const { loading, search, items, categories, serverError, selectedCategory } =
   storeToRefs(useItemsStore());
 const { getHighlights, getCategories } = useItemsStore();
@@ -13,15 +16,15 @@ getCategories();
 getHighlights();
 
 const onSelectCategory = (category) => {
-  if (loading) return;
-  if (category === selectedCategory) return;
+  if (loading.value) return;
+  if (category === selectedCategory.value) return;
   selectedCategory.value = category;
   loading.value = true;
   //   changeHeader(category);
   //TODO check router
   router.push({
     name: "category",
-    params: { locale: $i18n.locale, category: category },
+    params: { locale: locale.value, category: category },
   });
   setTimeout(() => {
     loading.value = false;
