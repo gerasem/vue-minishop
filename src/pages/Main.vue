@@ -4,11 +4,12 @@ import { useItemsStore } from "@/store/items";
 import AppItem from "@/components/AppItem.vue";
 import AppLoading from "@/components/AppLoading.vue";
 import AppCategory from "@/components/AppCategory.vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { ref } from "vue";
+import { ref, watch, computed } from "vue";
 
 const router = useRouter();
+const route = useRoute();
 const { locale } = useI18n();
 const { loading, search, items, categories, serverError, selectedCategory } =
   storeToRefs(useItemsStore());
@@ -21,7 +22,7 @@ const onSelectCategory = (category) => {
   if (category === selectedCategory.value) return;
   selectedCategory.value = category;
   loading.value = true;
-  changeHeader(category);
+  header.value = category;
   router.push({
     name: "category",
     params: { locale: locale.value, category: category },
@@ -33,13 +34,36 @@ const onSelectCategory = (category) => {
 };
 
 const header = ref("Highlights");
-const changeHeader = (title = "Highlights") => {
-  if (search.value.length) {
+
+watch(search, (newValue, oldValue) => {
+  if (newValue.length > 0) {
     header.value = "Search...";
-  } else {
-    header.value = title;
+    router.push({
+      name: "search",
+      params: { locale: locale.value },
+      query: { s: search.value },
+    });
   }
-};
+  if (newValue.length === 0 && route.name === "search") {
+    router.push({ name: "main", params: { locale: locale.value } });
+  }
+  if (newValue.length > 0 && newValue.length <= 1 && oldValue <= 2) {
+    loading.value = true;
+    selectedCategory.value = null;
+    setTimeout(() => {
+      loading.value = false;
+    }, 500);
+  }
+});
+
+const filteredItems = computed(() => {
+  if (search.value) {
+    return items.value.filter((s) =>
+      s.title.toLowerCase().includes(search.value.toLowerCase())
+    );
+  }
+  return items.value;
+});
 </script>
 
 <template>
@@ -76,12 +100,12 @@ const changeHeader = (title = "Highlights") => {
 
       <div class="row">
         <template
-          v-for="item in items"
+          v-for="item in filteredItems"
           :key="item.id"
         >
           <app-item :item="item"></app-item>
         </template>
-        <template v-if="!items.length">
+        <template v-if="!filteredItems.length">
           <div class="col">Items not found</div>
         </template>
       </div>

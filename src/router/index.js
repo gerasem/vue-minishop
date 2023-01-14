@@ -19,7 +19,7 @@ export function setupRouter(i18n) {
       children: [
         {
           path: "",
-          name: "home",
+          name: "main",
           component: Main,
         },
         {

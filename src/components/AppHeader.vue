@@ -22,7 +22,7 @@ const { search } = storeToRefs(useItemsStore());
       <div class="row align-items-center">
         <div class="col-auto">
           <router-link
-            :to="{ name: 'home', params: { locale: $i18n.locale } }"
+            :to="{ name: 'main', params: { locale: locale } }"
             class="header__logo"
           >
             Demo Store
