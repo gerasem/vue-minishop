@@ -1,5 +1,30 @@
 <script setup>
+import { computed } from "vue";
 import imagePlaceholder from "@/assets/images/320x240.png";
+
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true,
+  },
+});
+
+const addToCart = () => {
+  $toast.add({
+    summary: "Item added to shopping cart",
+    life: 3000,
+    group: "cart",
+  });
+};
+
+const getSale = computed(() => {
+  if (!props.item.old_price) return;
+  return ((props.item.price / props.item.old_price - 1) * 100).toFixed(0);
+});
+
+const onUnmounted = () => {
+  $toast.removeGroup("cart");
+};
 </script>
 
 <template>
@@ -39,38 +64,6 @@ import imagePlaceholder from "@/assets/images/320x240.png";
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-  },
-
-  computed: {
-    getSale() {
-      if (!this.item.old_price) return;
-      return ((this.item.price / this.item.old_price - 1) * 100).toFixed(0);
-    },
-  },
-
-  methods: {
-    addToCart() {
-      this.$toast.add({
-        summary: "Item added to shopping cart",
-        life: 3000,
-        group: "cart",
-      });
-    },
-  },
-
-  unmounted() {
-    this.$toast.removeGroup("cart");
-  },
-};
-</script>
 
 <style scoped lang="scss">
 .item {

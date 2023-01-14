@@ -3,6 +3,26 @@ import { storeToRefs } from "pinia";
 import { useItemsStore } from "@/store/items";
 import imagePlaceholder from "@/assets/images/320x240.png";
 const { selectedCategory } = storeToRefs(useItemsStore());
+
+const props = defineProps({
+  category: {
+    type: String,
+    required: true,
+  },
+});
+
+const emit = defineEmits({ selectCategory: null });
+
+const handleSelectCategory = (category) => {
+  emit("selectCategory", category);
+  selectedCategory.value = category;
+};
+
+const getCategoryClass = (category) => {
+  if (!selectedCategory.value) return;
+  if (category === selectedCategory.value) return "active";
+  return "category--opacity";
+};
 </script>
 
 <template>
@@ -21,34 +41,6 @@ const { selectedCategory } = storeToRefs(useItemsStore());
     <h3 class="category__title">{{ category }}</h3>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    category: {
-      type: String,
-      required: true,
-    },
-  },
-
-  methods: {
-    handleSelectCategory(category) {
-      this.$emit("selectCategory", category);
-      this.selectedCategory = category;
-    },
-
-    getCategoryClass(category) {
-      if (!this.selectedCategory) return;
-      if (category === this.selectedCategory) return "active";
-      return "category--opacity";
-    },
-  },
-
-  emits: {
-    selectCategory: null,
-  },
-};
-</script>
 
 <style scoped lang="scss">
 .category {

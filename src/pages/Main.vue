@@ -4,12 +4,29 @@ import { useItemsStore } from "@/store/items";
 import AppItem from "@/components/AppItem.vue";
 import AppLoading from "@/components/AppLoading.vue";
 import AppCategory from "@/components/AppCategory.vue";
-const { loading, search, items, categories, serverError } = storeToRefs(
-  useItemsStore()
-);
+import { useRouter } from "vue-router";
+const router = useRouter();
+const { loading, search, items, categories, serverError, selectedCategory } =
+  storeToRefs(useItemsStore());
 const { getHighlights, getCategories } = useItemsStore();
 getCategories();
 getHighlights();
+
+const onSelectCategory = (category) => {
+  if (loading) return;
+  if (category === selectedCategory) return;
+  selectedCategory.value = category;
+  loading.value = true;
+  //   changeHeader(category);
+  //TODO check router
+  router.push({
+    name: "category",
+    params: { locale: $i18n.locale, category: category },
+  });
+  setTimeout(() => {
+    loading.value = false;
+  }, 500);
+};
 </script>
 
 <template>
@@ -26,7 +43,10 @@ getHighlights();
             v-for="category in categories"
             :key="category"
           >
-            <app-category :category="category"></app-category>
+            <app-category
+              :category="category"
+              @selectCategory="onSelectCategory"
+            ></app-category>
           </div>
         </div>
       </div>
@@ -39,7 +59,6 @@ getHighlights();
       class="container-fluid flex-grow-1"
     >
       <p v-if="serverError">{{ serverError }}</p>
-
       <h1>Highlights</h1>
 
       <div class="row">
@@ -58,17 +77,14 @@ getHighlights();
 </template>
 
 <style scoped lang="scss">
-.v-enter-active {
-  transition: all 0.3s ease;
-}
-
 .v-enter-from {
   opacity: 0;
   transform: translateY(30px);
 }
 
 .category-leave-to,
-.category-enter-active {
+.category-enter-active,
+.v-enter-active {
   transition: all 0.3s ease;
 }
 
