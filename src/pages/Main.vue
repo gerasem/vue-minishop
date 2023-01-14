@@ -6,29 +6,39 @@ import AppLoading from "@/components/AppLoading.vue";
 import AppCategory from "@/components/AppCategory.vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { ref } from "vue";
 
 const router = useRouter();
 const { locale } = useI18n();
 const { loading, search, items, categories, serverError, selectedCategory } =
   storeToRefs(useItemsStore());
-const { getHighlights, getCategories } = useItemsStore();
+const { getItems, getCategories } = useItemsStore();
 getCategories();
-getHighlights();
+getItems();
 
 const onSelectCategory = (category) => {
   if (loading.value) return;
   if (category === selectedCategory.value) return;
   selectedCategory.value = category;
   loading.value = true;
-  //   changeHeader(category);
-  //TODO check router
+  changeHeader(category);
   router.push({
     name: "category",
     params: { locale: locale.value, category: category },
   });
+  getItems();
   setTimeout(() => {
     loading.value = false;
   }, 500);
+};
+
+const header = ref("Highlights");
+const changeHeader = (title = "Highlights") => {
+  if (search.value.length) {
+    header.value = "Search...";
+  } else {
+    header.value = title;
+  }
 };
 </script>
 
@@ -62,7 +72,7 @@ const onSelectCategory = (category) => {
       class="container-fluid flex-grow-1"
     >
       <p v-if="serverError">{{ serverError }}</p>
-      <h1>Highlights</h1>
+      <h1>{{ header }}</h1>
 
       <div class="row">
         <template

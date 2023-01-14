@@ -16,13 +16,21 @@ export const useItemsStore = defineStore({
   }),
 
   actions: {
-    async getHighlights() {
+    async getItems() {
       this.loading = true;
       if (this.items.length) {
         this.items = [];
       }
       try {
-        const response = await axios.get(`${fakeStoreUrl}/products`);
+        let response = {};
+        if (this.selectedCategory) {
+          response = await axios.get(
+            `${fakeStoreUrl}/products/category/${this.selectedCategory}`
+          );
+        } else {
+          response = await axios.get(`${fakeStoreUrl}/products`);
+        }
+        
         if (response.status === 200) {
           this.items = response.data;
         }
