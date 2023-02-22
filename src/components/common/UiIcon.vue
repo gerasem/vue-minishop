@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "@vue/reactivity";
+import { computed } from "vue";
 
 const props = defineProps({
   icon: {
@@ -19,9 +19,10 @@ const props = defineProps({
   },
 });
 
-const minHeightForTotalCount = computed({
-  "min-height": props.count.toFixed(0).toString().length + "8" + "px",
-});
+// const minHeightForTotalCount = computed({
+//   // "min-height": props.count.value.toFixed(0).toString().length + "8" + "px",
+//   "min-height": "8" + "px",
+// });
 </script>
 
 <template>
@@ -38,7 +39,6 @@ const minHeightForTotalCount = computed({
     <span
       v-if="count"
       class="icon__count"
-      :style="minHeightForTotalCount"
     >
       <slot></slot>
     </span>

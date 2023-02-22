@@ -9,22 +9,22 @@ const props = defineProps({
   },
 });
 
-const addToCart = () => {
-  $toast.add({
-    summary: "Item added to shopping cart",
-    life: 3000,
-    group: "cart",
-  });
-};
+// const addToCart = () => {
+//   $toast.add({
+//     summary: "Item added to shopping cart",
+//     life: 3000,
+//     group: "cart",
+//   });
+// };
 
-const getSale = computed(() => {
-  if (!props.item.old_price) return;
-  return ((props.item.price / props.item.old_price - 1) * 100).toFixed(0);
-});
+// const getSale = computed(() => {
+//   if (!props.item.old_price) return;
+//   return ((props.item.price / props.item.old_price - 1) * 100).toFixed(0);
+// });
 
-const onUnmounted = () => {
-  $toast.removeGroup("cart");
-};
+// const onUnmounted = () => {
+//   $toast.removeGroup("cart");
+// };
 </script>
 
 <template>

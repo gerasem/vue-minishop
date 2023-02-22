@@ -1,8 +1,11 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { useItemsStore } from "@/store/items";
+import { useCartStore } from "@/store/cart";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { watch, ref, onMounted } from "vue";
+import gsap from "gsap";
 
 const { t, locale } = useI18n({ useScope: "global" });
 const router = useRouter();
@@ -14,6 +17,16 @@ const setLocale = (language) => {
 };
 
 const { search } = storeToRefs(useItemsStore());
+const count = ref("0");
+const cartStore = useCartStore();
+
+onMounted(() => {
+  count.value = cartStore.totalCount;
+});
+
+watch('cartStore.totalCount', (n) => {
+  gsap.to(this, { duration: 0.5, totalCount: Number(n) || 0 });
+});
 </script>
 
 <template>
@@ -25,7 +38,7 @@ const { search } = storeToRefs(useItemsStore());
             :to="{ name: 'main', params: { locale: locale } }"
             class="header__logo"
           >
-            Demo Store
+            Demo Store {{ count }}
             <span class="header__slogan">vue shopping cart</span>
           </router-link>
         </div>
@@ -66,6 +79,36 @@ const { search } = storeToRefs(useItemsStore());
             v-model="search"
             placeholder="Search ..."
           ></ui-input>
+        </div>
+
+        <div class="col-auto">
+          <div class="header__icons">
+            <!-- <router-link
+              to="/"
+              class="d-none d-md-block header__icon-link"
+            >
+              <ui-icon icon="person"></ui-icon>
+            </router-link>
+
+            <router-link
+              to="/"
+              class="header__icon-link header__icon-link--first"
+            >
+              <ui-icon icon="heart"> </ui-icon>
+            </router-link> -->
+
+            <router-link
+              :to="{ name: 'cart', params: { locale: $i18n.locale } }"
+              class="header__icon-link"
+            >
+              <ui-icon
+                icon="bag"
+                :count="count"
+              >
+                {{ count }}
+              </ui-icon>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
