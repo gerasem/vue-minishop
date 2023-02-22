@@ -37,7 +37,7 @@ const header = ref("Highlights");
 
 watch(search, (newValue, oldValue) => {
   if (newValue.length > 0) {
-    header.value = "Search...";
+    header.value = `Search for <strong>${search.value}</strong>`;
     router.push({
       name: "search",
       params: { locale: locale.value },
@@ -96,7 +96,7 @@ const filteredItems = computed(() => {
       class="container-fluid flex-grow-1"
     >
       <p v-if="serverError">{{ serverError }}</p>
-      <h1>{{ header }}</h1>
+      <h1 v-html="header"></h1>
 
       <div class="row">
         <template
