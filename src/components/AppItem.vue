@@ -3,7 +3,7 @@ import { computed } from "vue";
 import imagePlaceholder from "@/assets/images/320x240.png";
 import { useCartStore } from "@/store/cart";
 
-const { addItem } = useCartStore();
+const { addItemToCart } = useCartStore();
 
 const props = defineProps({
   item: {
@@ -59,7 +59,7 @@ const props = defineProps({
         </div>
         <ui-icon
           icon="bag-plus"
-          @click="addItem()"
+          @click="addItemToCart(item)"
         >
         </ui-icon>
       </div>

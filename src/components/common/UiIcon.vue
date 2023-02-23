@@ -16,8 +16,6 @@ const props = defineProps({
   },
 });
 
-console.log("L", totalCount.value.toString().length);
-
 const minHeightForTotalCount = computed(() => {
   return { "min-width": totalCount.value.toString().length + "8" + "px" };
 });

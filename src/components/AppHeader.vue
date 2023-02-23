@@ -14,6 +14,7 @@ const setLocale = (language) => {
   router.push({ params: { locale: language } });
 };
 const { search } = storeToRefs(useItemsStore());
+const { totalCount } = storeToRefs(useCartStore());
 </script>
 
 <template>
@@ -89,7 +90,7 @@ const { search } = storeToRefs(useItemsStore());
               class="header__icon-link"
             >
               <ui-icon icon="bag">
-                {{ count.toFixed() }}
+                {{ totalCount }}
               </ui-icon>
             </router-link>
           </div>
@@ -98,31 +99,6 @@ const { search } = storeToRefs(useItemsStore());
     </div>
   </header>
 </template>
-
-<script>
-import gsap from "gsap";
-import { mapState } from "pinia";
-import { useCartStore } from "@/store/cart";
-
-export default {
-  computed: {
-    ...mapState(useCartStore, ["totalCount"]),
-  },
-  data() {
-    return {
-      count: 0,
-    };
-  },
-  watch: {
-    totalCount(n) {
-      gsap.to(this, { duration: 0.5, count: Number(n) || 0 });
-    },
-  },
-  created() {
-    this.count = this.totalCount;
-  },
-};
-</script>
 
 <style scoped lang="scss">
 .header {
