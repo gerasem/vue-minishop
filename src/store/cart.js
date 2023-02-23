@@ -16,6 +16,9 @@ export const useCartStore = defineStore({
   },
 
   actions: {
-    async getItems() {},
+    addItem() {
+      console.log("add item", this.items);
+      this.items.push({ id: 3, count: 3 });
+    },
   },
 });

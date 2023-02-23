@@ -1,6 +1,9 @@
 <script setup>
 import { computed } from "vue";
 import imagePlaceholder from "@/assets/images/320x240.png";
+import { useCartStore } from "@/store/cart";
+
+const { addItem } = useCartStore();
 
 const props = defineProps({
   item: {
@@ -56,7 +59,7 @@ const props = defineProps({
         </div>
         <ui-icon
           icon="bag-plus"
-          @click="addToCart()"
+          @click="addItem()"
         >
         </ui-icon>
       </div>
