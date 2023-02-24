@@ -14,7 +14,12 @@ export const useCartStore = defineStore({
 
   actions: {
     addItemToCart(item) {
-      this.items.push({ id: item.id, count: 1 });
+      const itemInCart = this.items.find((i) => i.id === item.id);
+      if (itemInCart) {
+        itemInCart.count++;
+      } else {
+        this.items.push({ id: item.id, count: 1 });
+      }
       this.saveToLS();
     },
 
