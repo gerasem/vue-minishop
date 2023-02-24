@@ -4,21 +4,21 @@ export const useCartStore = defineStore({
   id: "cart",
 
   state: () => ({
-    items: [],
+    cartList: [],
   }),
 
   getters: {
     totalCount: (state) =>
-      state.items.map((i) => i.count).reduce((count, num) => count + num, 0),
+      state.cartList.map((i) => i.count).reduce((count, num) => count + num, 0),
   },
 
   actions: {
     addItemToCart(item) {
-      const itemInCart = this.items.find((i) => i.id === item.id);
+      const itemInCart = this.cartList.find((i) => i.id === item.id);
       if (itemInCart) {
         itemInCart.count++;
       } else {
-        this.items.push({ id: item.id, count: 1 });
+        this.cartList.push({ id: item.id, count: 1 });
       }
       this.saveToLS();
     },
@@ -26,12 +26,12 @@ export const useCartStore = defineStore({
     initShoppingCart() {
       const readLS = localStorage.getItem("itemsInCart");
       if (readLS) {
-        this.items = JSON.parse(readLS);
+        this.cartList = JSON.parse(readLS);
       }
     },
 
     saveToLS() {
-      localStorage.setItem("itemsInCart", JSON.stringify(this.items));
+      localStorage.setItem("itemsInCart", JSON.stringify(this.cartList));
     },
   },
 });
