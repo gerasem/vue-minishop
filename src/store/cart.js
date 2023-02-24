@@ -43,5 +43,9 @@ export const useCartStore = defineStore({
       this.saveToLS();
       setTimeout(() => setLoading(false), 500);
     },
+
+    deleteCart() {
+      this.cartList = []
+    }
   },
 });

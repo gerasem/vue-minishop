@@ -11,7 +11,7 @@ const { loading, search, items, serverError } = storeToRefs(useItemsStore());
 const { getItems } = useItemsStore();
 getItems();
 
-const { cartList } = storeToRefs(useCartStore());
+const { cartList, deleteCart } = storeToRefs(useCartStore());
 const fullCart = ref([]);
 const couponCode = ref("");
 const displayConfirmDialog = ref(false);
