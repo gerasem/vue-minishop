@@ -30,7 +30,7 @@
     <div class="cart__actions">
       <ui-icon
         icon="dash-lg"
-        :class="{ 'icon--disabled': item.quantity <= 1 }"
+        :class="{ 'icon--disabled': item.count <= 1 }"
         @click="decrementCount()"
       >
       </ui-icon>
@@ -45,7 +45,7 @@
 
       <ui-icon
         icon="plus-lg"
-        :class="{ 'icon--disabled': item.quantity >= $options.maxCount }"
+        :class="{ 'icon--disabled': item.count >= $options.maxCount }"
         @click="incrementCount()"
       >
       </ui-icon>
@@ -80,19 +80,19 @@ export default {
     },
 
     getItemCount() {
-      if (!isFinite(this.item.quantity)) {
-        this.item.quantity = 1;
+      if (!isFinite(this.item.count)) {
+        this.item.count = 1;
         this.$toast.add({ summary: "only digits", life: 3000, group: "error" });
       }
-      if (this.item.quantity > this.$options.maxCount) {
-        this.item.quantity = this.$options.maxCount;
+      if (this.item.count > this.$options.maxCount) {
+        this.item.count = this.$options.maxCount;
         this.$toast.add({
           summary: "More than 999",
           life: 3000,
           group: "error",
         });
       }
-      return this.item.quantity;
+      return this.item.count;
     },
   },
 
@@ -110,7 +110,7 @@ export default {
 
       this.$store.dispatch("changeQuantityOfItem", {
         id: this.item.id,
-        quantity: changedQuantity,
+        count: changedQuantity,
       });
     },
 
@@ -122,31 +122,31 @@ export default {
 
       this.$store.dispatch("changeQuantityOfItem", {
         id: this.item.id,
-        quantity: changedQuantity,
+        count: changedQuantity,
       });
     },
 
     incrementCount() {
-      if (this.item.quantity >= this.$options.maxCount) {
+      if (this.item.count >= this.$options.maxCount) {
         //todo add toast message
         return;
       }
-      this.item.quantity++;
+      this.item.count++;
       this.$store.dispatch("changeQuantityOfItem", {
         id: this.item.id,
-        quantity: this.item.quantity,
+        count: this.item.count,
       });
     },
 
     decrementCount() {
-      if (this.item.quantity <= 1) {
+      if (this.item.count <= 1) {
         //todo add toast message
         return;
       }
-      this.item.quantity--;
+      this.item.count--;
       this.$store.dispatch("changeQuantityOfItem", {
         id: this.item.id,
-        quantity: this.item.quantity,
+        count: this.item.count,
       });
     },
   },

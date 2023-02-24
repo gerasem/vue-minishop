@@ -18,12 +18,12 @@ const displayConfirmDialog = ref(false);
 
 watch(loading, () => {
   if (!loading.value) {
-    console.log("items", items.value);
     cartList.value.forEach((item) => {
       const foundedItem = items.value.find((i) => i.id === item.id);
       console.log("founded item", foundedItem);
       fullCart.value.push({ ...item, ...foundedItem });
     });
+    console.log("full cart", fullCart.value);
   }
 });
 
