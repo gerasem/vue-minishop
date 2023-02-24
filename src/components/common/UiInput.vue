@@ -74,12 +74,6 @@ const handleClickOnIcon = () => {
   </div>
 </template>
 
-<script>
-export default {
-  name: "UiInput",
-};
-</script>
-
 <style lang="scss" scoped>
 .input {
   height: 3.125rem;

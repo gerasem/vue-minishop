@@ -22,7 +22,6 @@ export default {
       required: false,
     },
   },
-  name: "UiButton",
   emits: {
     clickOnButton: null,
   },

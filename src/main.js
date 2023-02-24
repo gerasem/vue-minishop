@@ -22,10 +22,12 @@ const i18n = setupI18n({
 
 const router = setupRouter(i18n);
 // import all common components
-import uiComponents from "@/components/common/index.js";
-uiComponents.forEach((component) => {
-  app.component(component.name, component);
-});
+import UiButton from "@/components/common/UiButton.vue";
+import UiIcon from "@/components/common/UiIcon.vue";
+import UiInput from "@/components/common/UiInput.vue";
+app.component("UiButton", UiButton);
+app.component("UiIcon", UiIcon);
+app.component("UiInput", UiInput);
 
 app
   .use(createPinia())

@@ -1,8 +1,5 @@
 <script setup>
 import { computed } from "vue";
-import { useCartStore } from "@/store/cart";
-import { storeToRefs } from "pinia";
-const { totalCount } = storeToRefs(useCartStore());
 
 const props = defineProps({
   icon: {
@@ -14,17 +11,22 @@ const props = defineProps({
     type: String,
     required: false,
   },
+
+  count: {
+    type: Number,
+    required: false,
+  },
 });
 
 const minHeightForTotalCount = computed(() => {
-  return { "min-width": totalCount.value.toString().length + "8" + "px" };
+  return { "min-width": props.count.toString().length + "8" + "px" };
 });
 </script>
 
 <template>
   <div
     class="icon__container"
-    :class="{ 'icon__container--active': totalCount > 0 }"
+    :class="{ 'icon__container--active': count > 0 }"
   >
     <i
       class="icon bi"
@@ -33,20 +35,14 @@ const minHeightForTotalCount = computed(() => {
     </i>
 
     <span
-      v-if="totalCount"
+      v-if="count"
       class="icon__count"
       :style="minHeightForTotalCount"
     >
-      <slot></slot>
+      {{ count }}
     </span>
   </div>
 </template>
-
-<script>
-export default {
-  name: "UiIcon",
-};
-</script>
 
 <style lang="scss" scoped>
 .icon {

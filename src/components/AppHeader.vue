@@ -99,8 +99,10 @@ const handleClickOnLogo = () => {
               :to="{ name: 'cart', params: { locale: $i18n.locale } }"
               class="header__icon-link"
             >
-              <ui-icon icon="bag">
-                {{ totalCount }}
+              <ui-icon
+                icon="bag"
+                :count="totalCount"
+              >
               </ui-icon>
             </router-link>
           </div>
