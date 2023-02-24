@@ -5,6 +5,7 @@ import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { SUPPORT_LOCALES } from "./i18n";
 import Toast from "primevue/toast";
+import { useCartStore } from "@/store/cart";
 
 const router = useRouter();
 const { t, locale } = useI18n({ useScope: "global" });
@@ -21,7 +22,8 @@ watch(router.currentRoute, (route) => {
   currentLocale.value = route.params.locale;
 });
 
-// return { t, locale, currentLocale, supportLocales: SUPPORT_LOCALES };
+const { initShoppingCart } = useCartStore();
+initShoppingCart();
 </script>
 
 <template>

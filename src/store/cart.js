@@ -4,10 +4,7 @@ export const useCartStore = defineStore({
   id: "cart",
 
   state: () => ({
-    items: [
-      { id: 1, count: 2 },
-      { id: 2, count: 4 },
-    ],
+    items: [],
   }),
 
   getters: {
@@ -18,6 +15,18 @@ export const useCartStore = defineStore({
   actions: {
     addItemToCart(item) {
       this.items.push({ id: item.id, count: 1 });
+      this.saveToLS();
+    },
+
+    initShoppingCart() {
+      const readLS = localStorage.getItem("itemsInCart");
+      if (readLS) {
+        this.items = JSON.parse(readLS);
+      }
+    },
+
+    saveToLS() {
+      localStorage.setItem("itemsInCart", JSON.stringify(this.items));
     },
   },
 });
