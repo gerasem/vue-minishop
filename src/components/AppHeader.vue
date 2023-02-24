@@ -13,8 +13,17 @@ const setLocale = (language) => {
   locale.value = language;
   router.push({ params: { locale: language } });
 };
-const { search } = storeToRefs(useItemsStore());
+const { search, loading, selectedCategory } = storeToRefs(useItemsStore());
 const { totalCount } = storeToRefs(useCartStore());
+
+const handleClickOnLogo = () => {
+  loading.value = true;
+  search.value = "";
+  selectedCategory.value = "";
+  setTimeout(() => {
+    loading.value = false;
+  }, 500);
+};
 </script>
 
 <template>
@@ -25,6 +34,7 @@ const { totalCount } = storeToRefs(useCartStore());
           <router-link
             :to="{ name: 'main', params: { locale: locale } }"
             class="header__logo"
+            @click="handleClickOnLogo"
           >
             Demo Store
             <span class="header__slogan">vue shopping cart</span>

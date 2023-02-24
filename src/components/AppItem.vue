@@ -20,10 +20,10 @@ const props = defineProps({
 //   });
 // };
 
-// const getSale = computed(() => {
-//   if (!props.item.old_price) return;
-//   return ((props.item.price / props.item.old_price - 1) * 100).toFixed(0);
-// });
+const getSale = computed(() => {
+  if (!props.item.old_price) return;
+  return ((props.item.price / props.item.old_price - 1) * 100).toFixed(0);
+});
 
 // const onUnmounted = () => {
 //   $toast.removeGroup("cart");

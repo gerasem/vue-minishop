@@ -36,8 +36,8 @@ const onSelectCategory = (category) => {
 const header = ref("Highlights");
 
 watch(search, (newValue, oldValue) => {
+  console.log("watch search", newValue);
   if (newValue.length > 0) {
-    header.value = `Search for <strong>${search.value}</strong>`;
     router.push({
       name: "search",
       params: { locale: locale.value },
@@ -53,6 +53,15 @@ watch(search, (newValue, oldValue) => {
     setTimeout(() => {
       loading.value = false;
     }, 500);
+  }
+});
+
+watch(route, (newValue, oldValue) => {
+  console.log("watch route", newValue.name);
+  if (newValue.name === "search") {
+    header.value = `Search for <strong>${search.value}</strong>`;
+  } else if (newValue.name === "main") {
+    header.value = "Highlights";
   }
 });
 
