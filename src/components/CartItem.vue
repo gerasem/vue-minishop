@@ -1,3 +1,21 @@
+<script setup>
+import { computed } from "vue";
+import { useCartStore } from "@/store/cart";
+const { deleteItem } = useCartStore();
+
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true,
+  },
+});
+
+const getSale = computed(() => {
+  if (!props.item.old_price) return;
+  return ((props.item.price / props.item.old_price - 1) * 100).toFixed(0);
+});
+</script>
+
 <template>
   <div class="cart__item">
     <router-link :to="item.slug ?? item">
@@ -54,7 +72,7 @@
     <ui-icon
       icon="x-lg"
       class="ms-3"
-      @click="deleteItem()"
+      @click="deleteItem(item)"
     >
     </ui-icon>
   </div>
@@ -62,23 +80,7 @@
 
 <script>
 export default {
-  data() {
-    return {};
-  },
-
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-  },
-
   computed: {
-    getSale() {
-      if (!this.item.old_price) return;
-      return ((this.item.price / this.item.old_price - 1) * 100).toFixed(0);
-    },
-
     getItemCount() {
       if (!isFinite(this.item.count)) {
         this.item.count = 1;
@@ -97,10 +99,6 @@ export default {
   },
 
   methods: {
-    deleteItem() {
-      this.$store.dispatch("handleOnDeleteItem", this.item);
-    },
-
     onChangeQuantity(event) {
       let changedQuantity = +event.target.value;
 

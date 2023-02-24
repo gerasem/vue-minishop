@@ -1,32 +1,32 @@
+<script setup>
+const props = defineProps({
+  icon: {
+    type: String,
+    default: "",
+    required: false,
+  },
+});
+
+const emit = defineEmits({ clickOnButton: null });
+
+const clickOnIcon = () => emit("clickOnButton");
+</script>
+
 <template>
   <button
     type="button"
-    @click="$emit('clickOnButton')"
+    @click="clickOnIcon()"
     class="btn button-component"
   >
     <i
       v-if="icon"
       :class="`bi bi-${icon}`"
       class="me-1"
-    ></i>
+    >
+    </i>
     <slot>Ok</slot>
   </button>
 </template>
-
-<script>
-export default {
-  props: {
-    icon: {
-      type: String,
-      default: "",
-      required: false,
-    },
-  },
-  emits: {
-    clickOnButton: null,
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 .button-component {

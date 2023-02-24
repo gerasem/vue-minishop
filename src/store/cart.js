@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useItemsStore } from "@/store/items";
 
 export const useCartStore = defineStore({
   id: "cart",
@@ -32,6 +33,15 @@ export const useCartStore = defineStore({
 
     saveToLS() {
       localStorage.setItem("itemsInCart", JSON.stringify(this.cartList));
+    },
+
+    deleteItem(item) {
+      const { setLoading } = useItemsStore();
+      setLoading(true);
+      console.log("delete item", item);
+      this.cartList = this.cartList.filter((i) => i.id !== item.id);
+      this.saveToLS();
+      setTimeout(() => setLoading(false), 500);
     },
   },
 });

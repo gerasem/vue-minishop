@@ -30,7 +30,7 @@ export const useItemsStore = defineStore({
         } else {
           response = await axios.get(`${fakeStoreUrl}/products`);
         }
-        
+
         if (response.status === 200) {
           this.items = response.data;
         }
@@ -58,6 +58,10 @@ export const useItemsStore = defineStore({
       } finally {
         this.loading = false;
       }
+    },
+
+    setLoading(value) {
+      this.loading = value;
     },
   },
 });

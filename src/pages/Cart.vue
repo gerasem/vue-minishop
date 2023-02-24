@@ -17,13 +17,15 @@ const couponCode = ref("");
 const displayConfirmDialog = ref(false);
 
 watch(loading, () => {
+  console.log("watch loader", loading.value);
   if (!loading.value) {
     cartList.value.forEach((item) => {
       const foundedItem = items.value.find((i) => i.id === item.id);
-      console.log("founded item", foundedItem);
       fullCart.value.push({ ...item, ...foundedItem });
     });
     console.log("full cart", fullCart.value);
+  } else {
+    fullCart.value = [];
   }
 });
 
