@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue";
+import { computed, onUnmounted } from "vue";
 import imagePlaceholder from "@/assets/images/320x240.png";
 import { useCartStore } from "@/store/cart";
 import { useToast } from "primevue/usetoast";
@@ -27,9 +27,9 @@ const getSale = computed(() => {
   return ((props.item.price / props.item.old_price - 1) * 100).toFixed(0);
 });
 
-// const onUnmounted = () => {
-//   $toast.removeGroup("cart");
-// };
+onUnmounted(() => {
+  toast.removeGroup("cart");
+});
 </script>
 
 <template>
