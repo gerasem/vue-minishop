@@ -121,22 +121,3 @@ const filteredItems = computed(() => {
     </main>
   </Transition>
 </template>
-
-<style scoped lang="scss">
-.v-enter-from {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.category-leave-to,
-.category-enter-active,
-.v-enter-active {
-  transition: all 0.3s ease;
-}
-
-.category-leave-to,
-.category-enter-from {
-  opacity: 0;
-  transform: translateY(-30px);
-}
-</style>
