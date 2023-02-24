@@ -3,16 +3,20 @@ import { storeToRefs } from "pinia";
 import { useItemsStore } from "@/store/items";
 import { useCartStore } from "@/store/cart";
 import AppLoading from "@/components/AppLoading.vue";
+import CartItem from "@/components/CartItem.vue";
 import { ref, watch, computed } from "vue";
-const { loading, search, items, categories, serverError, selectedCategory } =
-  storeToRefs(useItemsStore());
+import Dialog from "primevue/dialog";
+
+const { loading, search, items, serverError } = storeToRefs(useItemsStore());
 const { getItems } = useItemsStore();
 getItems();
 
 const { cartList } = storeToRefs(useCartStore());
 const fullCart = ref([]);
+const couponCode = ref("");
+const displayConfirmDialog = ref(false);
 
-watch(loading, (newValue, oldValue) => {
+watch(loading, () => {
   if (!loading.value) {
     console.log("items", items.value);
     cartList.value.forEach((item) => {
@@ -21,6 +25,25 @@ watch(loading, (newValue, oldValue) => {
       fullCart.value.push({ ...item, ...foundedItem });
     });
   }
+});
+
+const totalPrice = computed(() => {
+  if (loading.value) return;
+  return fullCart.value
+    .map((item) => item.price)
+    .reduce((pr, num) => pr + num, 0);
+});
+
+const subTotal = computed(() => {
+  if (loading.value) return;
+  return fullCart.value
+    .map((item) => item.price)
+    .reduce((pr, num) => pr + num, 0);
+});
+
+const freeShipping = computed(() => {
+  if (loading.value) return;
+  return subTotal >= 50;
 });
 </script>
 
@@ -37,7 +60,6 @@ watch(loading, (newValue, oldValue) => {
       <p v-if="serverError">{{ serverError }}</p>
       <h1>Cart</h1>
 
-      <pre>{{ items }}</pre>
       <template v-if="fullCart.length">
         <div class="row">
           <div class="col-lg-8">
@@ -50,9 +72,7 @@ watch(loading, (newValue, oldValue) => {
           </div>
           <div class="col-lg-4">
             <div class="cart__form">
-              <div class="cart__info">
-                Free shipping from 50€
-              </div>
+              <div class="cart__info">Free shipping from 50€</div>
               <div class="cart__form-container">
                 <div class="text-center">
                   <div class="row">
@@ -60,9 +80,9 @@ watch(loading, (newValue, oldValue) => {
                     <div class="col text-start">
                       <span class="cart__form-price"
                         >{{
-                          itemsPrice > 1
-                            ? itemsPrice.toFixed(2)
-                            : itemsPrice.toPrecision(2)
+                          subTotal > 1
+                            ? subTotal.toFixed(2)
+                            : subTotal.toPrecision(2)
                         }}€</span
                       >
                     </div>
@@ -72,11 +92,7 @@ watch(loading, (newValue, oldValue) => {
                     <div class="col text-end">Shipping:</div>
                     <div class="col text-start">
                       <span class="cart__form-price">
-                        {{
-                          freeShipping
-                            ? "Free"
-                            : "50€"
-                        }}
+                        {{ freeShipping ? "Free" : "50€" }}
                       </span>
                     </div>
                   </div>
@@ -121,13 +137,13 @@ watch(loading, (newValue, oldValue) => {
 
                   <div class="row text-start">
                     <div class="col">
-                      <button-component
+                      <ui-button
                         v-show="fullCart.length"
                         class="btn-primary"
                         icon="bag-check"
                       >
                         Buy
-                      </button-component>
+                      </ui-button>
                     </div>
                   </div>
                 </div>
@@ -151,7 +167,7 @@ watch(loading, (newValue, oldValue) => {
 
       <Dialog
         header="are you sure?"
-        v-model:visible="display"
+        v-model:visible="displayConfirmDialog"
         :modal="true"
         :dismissableMask="true"
       >
