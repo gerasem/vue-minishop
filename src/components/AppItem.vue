@@ -2,7 +2,8 @@
 import { computed } from "vue";
 import imagePlaceholder from "@/assets/images/320x240.png";
 import { useCartStore } from "@/store/cart";
-
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 const { addItemToCart } = useCartStore();
 
 const props = defineProps({
@@ -12,13 +13,14 @@ const props = defineProps({
   },
 });
 
-// const addToCart = () => {
-//   $toast.add({
-//     summary: "Item added to shopping cart",
-//     life: 3000,
-//     group: "cart",
-//   });
-// };
+const addToCart = (item) => {
+  addItemToCart(item);
+  toast.add({
+    summary: "Item added to shopping cart",
+    life: 3000,
+    group: "cart",
+  });
+};
 
 const getSale = computed(() => {
   if (!props.item.old_price) return;
@@ -59,7 +61,7 @@ const getSale = computed(() => {
         </div>
         <ui-icon
           icon="bag-plus"
-          @click="addItemToCart(item)"
+          @click="addToCart(item)"
         >
         </ui-icon>
       </div>
