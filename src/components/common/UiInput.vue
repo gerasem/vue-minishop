@@ -54,8 +54,9 @@ const handleClickOnIcon = () => {
       <template v-if="icon">
         <template v-if="icon === 'search'">
           <ui-icon
+            class="icon__input-field"
+            :class="{ 'icon__input-field--active': modelValue }"
             :icon="modelValue ? 'x-lg' : 'search'"
-            customClass="icon"
             @click="handleClickOnIcon"
           >
           </ui-icon>
@@ -63,8 +64,9 @@ const handleClickOnIcon = () => {
 
         <template v-else>
           <ui-icon
+            class="icon__input-field"
+            :class="{ 'icon__input-field--active': modelValue }"
             :icon="icon"
-            customClass="icon"
             @click="handleClickOnIcon"
           >
           </ui-icon>
@@ -110,6 +112,10 @@ const handleClickOnIcon = () => {
     height: 2.5rem;
     border: 0;
     border-bottom: 1px solid $border-color;
+  }
+
+  & .active {
+    background-color: $background-gray;
   }
 }
 </style>

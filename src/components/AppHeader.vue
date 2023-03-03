@@ -188,5 +188,12 @@ const handleClickOnLogo = () => {
       }
     }
   }
+
+  &__icon-link {
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
 }
 </style>

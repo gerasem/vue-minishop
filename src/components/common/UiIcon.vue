@@ -7,11 +7,6 @@ const props = defineProps({
     required: true,
   },
 
-  customClass: {
-    type: String,
-    required: false,
-  },
-
   count: {
     type: Number,
     required: false,
@@ -30,7 +25,7 @@ const minHeightForTotalCount = computed(() => {
   >
     <i
       class="icon bi"
-      :class="`bi-${icon} icon--${customClass ?? icon}`"
+      :class="`bi-${icon} icon--${icon}`"
     >
     </i>
 
@@ -59,41 +54,6 @@ const minHeightForTotalCount = computed(() => {
 
   &--person {
     font-size: 1.75rem;
-  }
-
-  &--icon {
-    position: absolute;
-    right: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1rem;
-    color: $text-muted;
-    cursor: default;
-
-    &.bi-x-lg,
-    &.bi-ticket {
-      cursor: pointer;
-
-      &:hover,
-      &:focus {
-        color: $color-secondary;
-      }
-    }
-  }
-
-  &--x-lg {
-    font-size: 1.5rem;
-    color: $text-muted;
-    transition: 0.2s;
-
-    &:hover,
-    &:focus {
-      color: $color-primary;
-    }
-  }
-
-  &--search {
-    font-size: 1.3rem;
   }
 
   &--list {
@@ -148,5 +108,71 @@ const minHeightForTotalCount = computed(() => {
       cursor: not-allowed;
     }
   }
+
+  &__input-field {
+    & .icon {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      color: $text-muted;
+      transition: color 0.2s;
+      cursor: default;
+
+      &.bi-x-lg,
+      &.bi-ticket {
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+          color: $color-secondary;
+        }
+      }
+    }
+
+    &--active {
+      & .bi-x-lg {
+        background: $color-secondary;
+        width: 38px;
+        height: 38px;
+        margin-right: -12px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        &:hover,
+        &:active {
+          color: #fff !important;
+        }
+      }
+      & .bi-ticket {
+        background: $color-secondary;
+        width: 48px;
+        height: 48px;
+        margin-right: -11px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        &:hover,
+        &:active {
+          color: #fff !important;
+        }
+      }
+    }
+  }
+}
+
+.bi-x-lg {
+  font-size: 1.5rem;
+  color: $color-primary;
+  transition: 0.2s;
+}
+
+.bi-search {
+  font-size: 1.3rem;
 }
 </style>
