@@ -3,7 +3,7 @@ import AppHeader from "@/components/AppHeader.vue";
 import { watch, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { SUPPORT_LOCALES } from "./i18n";
+// import { SUPPORT_LOCALES } from "./i18n";
 import Toast from "primevue/toast";
 import { useCartStore } from "@/store/cart";
 

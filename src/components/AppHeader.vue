@@ -3,10 +3,12 @@ import { storeToRefs } from "pinia";
 import { useItemsStore } from "@/store/items";
 import { useCartStore } from "@/store/cart";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import { watch } from "vue";
 
 const { t, locale } = useI18n({ useScope: "global" });
 const router = useRouter();
+const route = useRoute();
 
 const setLocale = (language) => {
   if (locale.value === language) return;
@@ -24,6 +26,27 @@ const handleClickOnLogo = () => {
     loading.value = false;
   }, 500);
 };
+
+watch(search, (newValue, oldValue) => {
+  console.log("watch search", newValue);
+  if (newValue.length > 0) {
+    router.push({
+      name: "search",
+      params: { locale: locale.value },
+      query: { s: search.value },
+    });
+  }
+  if (newValue.length === 0 && route.name === "search") {
+    router.push({ name: "main", params: { locale: locale.value } });
+  }
+  if (newValue.length > 0 && newValue.length <= 1 && oldValue <= 2) {
+    loading.value = true;
+    selectedCategory.value = null;
+    setTimeout(() => {
+      loading.value = false;
+    }, 500);
+  }
+});
 </script>
 
 <template>

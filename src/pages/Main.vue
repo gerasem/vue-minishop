@@ -35,33 +35,14 @@ const onSelectCategory = (category) => {
 
 const header = ref("Highlights");
 
-watch(search, (newValue, oldValue) => {
-  console.log("watch search", newValue);
-  if (newValue.length > 0) {
-    router.push({
-      name: "search",
-      params: { locale: locale.value },
-      query: { s: search.value },
-    });
-  }
-  if (newValue.length === 0 && route.name === "search") {
-    router.push({ name: "main", params: { locale: locale.value } });
-  }
-  if (newValue.length > 0 && newValue.length <= 1 && oldValue <= 2) {
-    loading.value = true;
-    selectedCategory.value = null;
-    setTimeout(() => {
-      loading.value = false;
-    }, 500);
-  }
-});
-
 watch(route, (newValue, oldValue) => {
   console.log("watch route", newValue.name);
   if (newValue.name === "search") {
     header.value = `Search for <strong>${search.value}</strong>`;
   } else if (newValue.name === "main") {
     header.value = "Highlights";
+  } else {
+    search.value = "";
   }
 });
 
