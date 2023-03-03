@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from "vue";
 import { useCartStore } from "@/store/cart";
-const { deleteItem } = useCartStore();
+const { deleteItem, decrementCount, incrementCount } = useCartStore();
 
 const props = defineProps({
   item: {
@@ -49,7 +49,7 @@ const getSale = computed(() => {
       <ui-icon
         icon="dash-lg"
         :class="{ 'icon--disabled': item.count <= 1 }"
-        @click="decrementCount()"
+        @click="decrementCount(item)"
       >
       </ui-icon>
 
@@ -64,7 +64,7 @@ const getSale = computed(() => {
       <ui-icon
         icon="plus-lg"
         :class="{ 'icon--disabled': item.count >= $options.maxCount }"
-        @click="incrementCount()"
+        @click="incrementCount(item)"
       >
       </ui-icon>
     </div>
@@ -124,29 +124,29 @@ export default {
       });
     },
 
-    incrementCount() {
-      if (this.item.count >= this.$options.maxCount) {
-        //todo add toast message
-        return;
-      }
-      this.item.count++;
-      this.$store.dispatch("changeQuantityOfItem", {
-        id: this.item.id,
-        count: this.item.count,
-      });
-    },
+    // incrementCount() {
+    //   if (this.item.count >= this.$options.maxCount) {
+    //     //todo add toast message
+    //     return;
+    //   }
+    //   this.item.count++;
+    //   this.$store.dispatch("changeQuantityOfItem", {
+    //     id: this.item.id,
+    //     count: this.item.count,
+    //   });
+    // },
 
-    decrementCount() {
-      if (this.item.count <= 1) {
-        //todo add toast message
-        return;
-      }
-      this.item.count--;
-      this.$store.dispatch("changeQuantityOfItem", {
-        id: this.item.id,
-        count: this.item.count,
-      });
-    },
+    // decrementCount() {
+    //   if (this.item.count <= 1) {
+    //     //todo add toast message
+    //     return;
+    //   }
+    //   this.item.count--;
+    //   this.$store.dispatch("changeQuantityOfItem", {
+    //     id: this.item.id,
+    //     count: this.item.count,
+    //   });
+    // },
   },
 
   maxCount: 999,

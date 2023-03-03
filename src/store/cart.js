@@ -36,16 +36,25 @@ export const useCartStore = defineStore({
     },
 
     deleteItem(item) {
-      const { setLoading } = useItemsStore();
-      setLoading(true);
       console.log("delete item", item);
       this.cartList = this.cartList.filter((i) => i.id !== item.id);
       this.saveToLS();
-      setTimeout(() => setLoading(false), 500);
+    },
+
+    decrementCount(item) {
+      console.log("decrementCount", item);
+      this.cartList.find((i) => i.id === item.id).count--;
+      this.saveToLS();
+    },
+
+    incrementCount(item) {
+      console.log("incrementCount", item);
+      this.cartList.find((i) => i.id === item.id).count++;
+      this.saveToLS();
     },
 
     deleteCart() {
-      this.cartList = []
-    }
+      this.cartList = [];
+    },
   },
 });

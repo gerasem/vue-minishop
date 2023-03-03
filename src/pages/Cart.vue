@@ -60,7 +60,6 @@ const freeShipping = computed(() => {
     >
       <p v-if="serverError">{{ serverError }}</p>
       <h1>Cart</h1>
-
       <template v-if="fullCart.length">
         <div class="row">
           <div class="col-lg-8">
