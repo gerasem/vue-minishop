@@ -12,20 +12,19 @@ const { getItems } = useItemsStore();
 getItems();
 
 const { cartList, deleteCart } = storeToRefs(useCartStore());
-const fullCart = ref([]);
 const couponCode = ref("");
 const displayConfirmDialog = ref(false);
 
-watch(loading, () => {
-  console.log("watch loader", loading.value);
+const fullCart = computed(() => {
   if (!loading.value) {
+    const result = [];
     cartList.value.forEach((item) => {
       const foundedItem = items.value.find((i) => i.id === item.id);
-      fullCart.value.push({ ...item, ...foundedItem });
+      result.push({ ...item, ...foundedItem });
     });
-    console.log("full cart", fullCart.value);
+    return result;
   } else {
-    fullCart.value = [];
+    return [];
   }
 });
 
