@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { useCartStore } from "@/store/cart";
 
 const fakeStoreUrl = "https://fakestoreapi.com";
 
@@ -39,6 +40,8 @@ export const useItemsStore = defineStore({
         console.error(error);
       } finally {
         this.loading = false;
+        const { createFullCard } = useCartStore();
+        createFullCard();
       }
     },
 

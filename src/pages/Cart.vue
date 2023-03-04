@@ -4,48 +4,17 @@ import { useItemsStore } from "@/store/items";
 import { useCartStore } from "@/store/cart";
 import AppLoading from "@/components/AppLoading.vue";
 import CartItem from "@/components/CartItem.vue";
-import { ref, watch, computed } from "vue";
+import { ref } from "vue";
 import Dialog from "primevue/dialog";
 
-const { loading, search, items, serverError } = storeToRefs(useItemsStore());
+const { loading, serverError } = storeToRefs(useItemsStore());
 const { getItems } = useItemsStore();
 getItems();
 
-const { cartList, deleteCart } = storeToRefs(useCartStore());
+const { deleteCart, fullCart, totalPrice, subTotal, freeShipping } =
+  storeToRefs(useCartStore());
 const couponCode = ref("");
 const displayConfirmDialog = ref(false);
-
-const fullCart = computed(() => {
-  if (!loading.value) {
-    const result = [];
-    cartList.value.forEach((item) => {
-      const foundedItem = items.value.find((i) => i.id === item.id);
-      result.push({ ...item, ...foundedItem });
-    });
-    return result;
-  } else {
-    return [];
-  }
-});
-
-const totalPrice = computed(() => {
-  if (loading.value) return;
-  return fullCart.value
-    .map((item) => item.price)
-    .reduce((pr, num) => pr + num, 0);
-});
-
-const subTotal = computed(() => {
-  if (loading.value) return;
-  return fullCart.value
-    .map((item) => item.price)
-    .reduce((pr, num) => pr + num, 0);
-});
-
-const freeShipping = computed(() => {
-  if (loading.value) return;
-  return subTotal >= 50;
-});
 </script>
 
 <template>

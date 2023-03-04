@@ -6,11 +6,35 @@ export const useCartStore = defineStore({
 
   state: () => ({
     cartList: [],
+    fullCart: [],
   }),
 
   getters: {
-    totalCount: (state) =>
-      state.cartList.map((i) => i.count).reduce((count, num) => count + num, 0),
+    totalCount: (state) => {
+      return state.cartList
+        .map((i) => i.count)
+        .reduce((count, num) => count + num, 0);
+    },
+
+    totalPrice: (state) => {
+      return state.fullCart.reduce((total, item) => {
+        const { price, count } = item;
+        total += price * count;
+        return total;
+      }, 0);
+    },
+
+    subTotal: (state) => {
+      return state.fullCart.reduce((total, item) => {
+        const { price, count } = item;
+        total += price * count;
+        return total;
+      }, 0);
+    },
+
+    freeShipping: (state) => {
+      return state.subTotal >= 50;
+    },
   },
 
   actions: {
@@ -22,6 +46,15 @@ export const useCartStore = defineStore({
         this.cartList.push({ id: item.id, count: 1 });
       }
       this.saveToLS();
+    },
+
+    createFullCard() {
+      const { items } = useItemsStore();
+      this.fullCart = [];
+      this.cartList.forEach((item) => {
+        const foundedItem = items.find((i) => i.id === item.id);
+        this.fullCart.push({ ...item, ...foundedItem });
+      });
     },
 
     initShoppingCart() {
@@ -36,21 +69,21 @@ export const useCartStore = defineStore({
     },
 
     deleteItem(item) {
-      console.log("delete item", item);
       this.cartList = this.cartList.filter((i) => i.id !== item.id);
       this.saveToLS();
+      this.createFullCard();
     },
 
     decrementCount(item) {
-      console.log("decrementCount", item);
       this.cartList.find((i) => i.id === item.id).count--;
       this.saveToLS();
+      this.createFullCard();
     },
 
     incrementCount(item) {
-      console.log("incrementCount", item);
       this.cartList.find((i) => i.id === item.id).count++;
       this.saveToLS();
+      this.createFullCard();
     },
 
     deleteCart() {
