@@ -4,8 +4,9 @@ import { useItemsStore } from "@/store/items";
 import { useCartStore } from "@/store/cart";
 import AppLoading from "@/components/AppLoading.vue";
 import CartItem from "@/components/CartItem.vue";
-import { ref } from "vue";
+import { ref, watch, onMounted, reactive } from "vue";
 import Dialog from "primevue/dialog";
+import gsap from "gsap";
 
 const { loading, serverError } = storeToRefs(useItemsStore());
 const { getItems } = useItemsStore();
@@ -15,6 +16,27 @@ const { deleteCart, fullCart, totalPrice, subTotal, freeShipping } =
   storeToRefs(useCartStore());
 const couponCode = ref("");
 const displayConfirmDialog = ref(false);
+
+const totalPriceAnimated = reactive({
+  number: 0,
+});
+
+const subTotalAnimated = reactive({
+  number: 0,
+});
+
+onMounted(() => {
+  totalPriceAnimated.value = totalPrice;
+  subTotalAnimated.value = subTotal;
+});
+
+watch(totalPrice, (n) => {
+  gsap.to(totalPriceAnimated, { duration: 0.5, number: Number(n) || 0 });
+});
+
+watch(subTotal, (n) => {
+  gsap.to(subTotalAnimated, { duration: 0.5, number: Number(n) || 0 });
+});
 </script>
 
 <template>
@@ -49,9 +71,7 @@ const displayConfirmDialog = ref(false);
                     <div class="col text-start">
                       <span class="cart__form-price"
                         >{{
-                          subTotal > 1
-                            ? subTotal.toFixed(2)
-                            : subTotal.toPrecision(2)
+                            subTotalAnimated.number.toFixed(2)
                         }}€</span
                       >
                     </div>
@@ -84,11 +104,7 @@ const displayConfirmDialog = ref(false);
                     <div class="col text-end fw-bold">Total price:</div>
                     <div class="col text-start">
                       <span class="cart__form-price cart__form-price--total">
-                        {{
-                          totalPrice > 1
-                            ? totalPrice.toFixed(2)
-                            : totalPrice.toPrecision(2)
-                        }}€
+                        {{ totalPriceAnimated.number.toFixed(2) }}€
                       </span>
                     </div>
                   </div>

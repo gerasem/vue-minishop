@@ -31,7 +31,9 @@ const onChangeQuantity = (event) => {
     changeCount(props.item, +event.target.value);
   }
 };
-const onBlurQuantity = (event) => {};
+const onBlurQuantity = (event) => {
+  inputError.value = false
+};
 
 const cartInput = ref(null);
 const clickOnInput = (event) => {
@@ -81,8 +83,6 @@ const clickOnInput = (event) => {
         ref="cartInput"
         class="cart__input"
         :class="{ 'cart__input--error': inputError }"
-        min="1"
-        max="999"
         :value="item.count"
         @blur="onBlurQuantity($event)"
         @input="onChangeQuantity($event)"
@@ -105,75 +105,6 @@ const clickOnInput = (event) => {
     </ui-icon>
   </div>
 </template>
-
-<script>
-export default {
-  // computed: {
-  //   getItemCount() {
-  //     if (!isFinite(this.item.count)) {
-  //       this.item.count = 1;
-  //       this.$toast.add({ summary: "only digits", life: 3000, group: "error" });
-  //     }
-  //     if (this.item.count > this.$options.maxCount) {
-  //       this.item.count = this.$options.maxCount;
-  //       this.$toast.add({
-  //         summary: "More than 999",
-  //         life: 3000,
-  //         group: "error",
-  //       });
-  //     }
-  //     return this.item.count;
-  //   },
-  // },
-
-  methods: {
-    // onChangeQuantity(event) {
-    //   let changedQuantity = +event.target.value;
-    //   if (changedQuantity < 0) {
-    //     changedQuantity = 1;
-    //   }
-    //   this.$store.dispatch("changeQuantityOfItem", {
-    //     id: this.item.id,
-    //     count: changedQuantity,
-    //   });
-    // },
-    // onBlurQuantity(event) {
-    //   let changedQuantity = +event.target.value;
-    //   if (changedQuantity === 0) {
-    //     changedQuantity = 1;
-    //   }
-    //   this.$store.dispatch("changeQuantityOfItem", {
-    //     id: this.item.id,
-    //     count: changedQuantity,
-    //   });
-    // },
-    // incrementCount() {
-    //   if (this.item.count >= this.$options.maxCount) {
-    //     //todo add toast message
-    //     return;
-    //   }
-    //   this.item.count++;
-    //   this.$store.dispatch("changeQuantityOfItem", {
-    //     id: this.item.id,
-    //     count: this.item.count,
-    //   });
-    // },
-    // decrementCount() {
-    //   if (this.item.count <= 1) {
-    //     //todo add toast message
-    //     return;
-    //   }
-    //   this.item.count--;
-    //   this.$store.dispatch("changeQuantityOfItem", {
-    //     id: this.item.id,
-    //     count: this.item.count,
-    //   });
-    // },
-  },
-
-  maxCount: 999,
-};
-</script>
 
 <style scoped lang="scss">
 .cart {
