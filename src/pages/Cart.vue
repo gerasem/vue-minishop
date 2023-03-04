@@ -41,7 +41,7 @@ const displayConfirmDialog = ref(false);
           </div>
           <div class="col-lg-4">
             <div class="cart__form">
-              <div class="cart__info">Free shipping from 50€</div>
+              <div class="cart__info">Free Shipping on all orders over 50€</div>
               <div class="cart__form-container">
                 <div class="text-center">
                   <div class="row">
@@ -198,6 +198,7 @@ const displayConfirmDialog = ref(false);
     text-align: center;
     color: $color-secondary;
     font-weight: 600;
+    line-height: 24px;
   }
 }
 </style>

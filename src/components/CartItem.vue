@@ -63,7 +63,7 @@ const getSale = computed(() => {
 
       <ui-icon
         icon="plus-lg"
-        :class="{ 'icon--disabled': item.count >= $options.maxCount }"
+        :class="{ 'icon--disabled': item.count >= 999 }"
         @click="incrementCount(item)"
       >
       </ui-icon>

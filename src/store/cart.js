@@ -80,12 +80,14 @@ export const useCartStore = defineStore({
     },
 
     decrementCount(item) {
+      if (this.cartList.find((i) => i.id === item.id).count <= 1) return;
       this.cartList.find((i) => i.id === item.id).count--;
       this.saveToLS();
       this.createFullCard();
     },
 
     incrementCount(item) {
+      if (this.cartList.find((i) => i.id === item.id).count >= 999) return;
       this.cartList.find((i) => i.id === item.id).count++;
       this.saveToLS();
       this.createFullCard();
