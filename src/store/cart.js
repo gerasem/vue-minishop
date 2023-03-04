@@ -93,6 +93,17 @@ export const useCartStore = defineStore({
       this.createFullCard();
     },
 
+    changeCount(item, count) {
+      console.log("change count", item, count);
+      this.cartList.find((i) => i.id === item.id).count = count;
+      console.log(
+        "new count",
+        this.cartList.find((i) => i.id === item.id).count
+      );
+      this.saveToLS();
+      this.createFullCard();
+    },
+
     deleteCart() {
       this.cartList = [];
     },

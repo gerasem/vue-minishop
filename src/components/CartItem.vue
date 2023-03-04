@@ -1,7 +1,8 @@
 <script setup>
-import { computed } from "vue";
+import { ref, computed } from "vue";
 import { useCartStore } from "@/store/cart";
-const { deleteItem, decrementCount, incrementCount } = useCartStore();
+const { deleteItem, decrementCount, incrementCount, changeCount } =
+  useCartStore();
 
 const props = defineProps({
   item: {
@@ -14,6 +15,28 @@ const getSale = computed(() => {
   if (!props.item.old_price) return;
   return ((props.item.price / props.item.old_price - 1) * 100).toFixed(0);
 });
+
+const inputError = ref(false);
+const onChangeQuantity = (event) => {
+  console.log(+event.target.value);
+  inputError.value = +event.target.value < 1 || +event.target.value > 999;
+  if (+event.target.value === 0) {
+    changeCount(props.item, 1);
+  }
+  if (+event.target.value > 999) {
+    const first3Letters = event.target.value.substring(0, 3);
+    changeCount(props.item, +first3Letters);
+  }
+  if (!inputError.value) {
+    changeCount(props.item, +event.target.value);
+  }
+};
+const onBlurQuantity = (event) => {};
+
+const cartInput = ref(null);
+const clickOnInput = (event) => {
+  cartInput.value.select();
+};
 </script>
 
 <template>
@@ -54,11 +77,16 @@ const getSale = computed(() => {
       </ui-icon>
 
       <input
-        type="text"
+        type="number"
+        ref="cartInput"
         class="cart__input"
-        :value="getItemCount"
+        :class="{ 'cart__input--error': inputError }"
+        min="1"
+        max="999"
+        :value="item.count"
         @blur="onBlurQuantity($event)"
         @input="onChangeQuantity($event)"
+        @click="clickOnInput()"
       />
 
       <ui-icon
@@ -80,50 +108,45 @@ const getSale = computed(() => {
 
 <script>
 export default {
-  computed: {
-    getItemCount() {
-      if (!isFinite(this.item.count)) {
-        this.item.count = 1;
-        this.$toast.add({ summary: "only digits", life: 3000, group: "error" });
-      }
-      if (this.item.count > this.$options.maxCount) {
-        this.item.count = this.$options.maxCount;
-        this.$toast.add({
-          summary: "More than 999",
-          life: 3000,
-          group: "error",
-        });
-      }
-      return this.item.count;
-    },
-  },
+  // computed: {
+  //   getItemCount() {
+  //     if (!isFinite(this.item.count)) {
+  //       this.item.count = 1;
+  //       this.$toast.add({ summary: "only digits", life: 3000, group: "error" });
+  //     }
+  //     if (this.item.count > this.$options.maxCount) {
+  //       this.item.count = this.$options.maxCount;
+  //       this.$toast.add({
+  //         summary: "More than 999",
+  //         life: 3000,
+  //         group: "error",
+  //       });
+  //     }
+  //     return this.item.count;
+  //   },
+  // },
 
   methods: {
-    onChangeQuantity(event) {
-      let changedQuantity = +event.target.value;
-
-      if (changedQuantity < 0) {
-        changedQuantity = 1;
-      }
-
-      this.$store.dispatch("changeQuantityOfItem", {
-        id: this.item.id,
-        count: changedQuantity,
-      });
-    },
-
-    onBlurQuantity(event) {
-      let changedQuantity = +event.target.value;
-      if (changedQuantity === 0) {
-        changedQuantity = 1;
-      }
-
-      this.$store.dispatch("changeQuantityOfItem", {
-        id: this.item.id,
-        count: changedQuantity,
-      });
-    },
-
+    // onChangeQuantity(event) {
+    //   let changedQuantity = +event.target.value;
+    //   if (changedQuantity < 0) {
+    //     changedQuantity = 1;
+    //   }
+    //   this.$store.dispatch("changeQuantityOfItem", {
+    //     id: this.item.id,
+    //     count: changedQuantity,
+    //   });
+    // },
+    // onBlurQuantity(event) {
+    //   let changedQuantity = +event.target.value;
+    //   if (changedQuantity === 0) {
+    //     changedQuantity = 1;
+    //   }
+    //   this.$store.dispatch("changeQuantityOfItem", {
+    //     id: this.item.id,
+    //     count: changedQuantity,
+    //   });
+    // },
     // incrementCount() {
     //   if (this.item.count >= this.$options.maxCount) {
     //     //todo add toast message
@@ -135,7 +158,6 @@ export default {
     //     count: this.item.count,
     //   });
     // },
-
     // decrementCount() {
     //   if (this.item.count <= 1) {
     //     //todo add toast message
@@ -155,6 +177,22 @@ export default {
 
 <style scoped lang="scss">
 .cart {
+  &__input {
+    &--error {
+      background-color: $color-primary;
+    }
+    /* Chrome, Safari, Edge, Opera */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    &[type="number"] {
+      -moz-appearance: textfield;
+    }
+  }
   &__item {
     display: flex;
     align-items: center;
