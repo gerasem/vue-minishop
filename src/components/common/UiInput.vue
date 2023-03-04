@@ -115,7 +115,7 @@ const handleClickOnIcon = () => {
   }
 
   & .active {
-    background-color: $background-gray;
+    border: 1px solid $color-secondary;
   }
 }
 </style>

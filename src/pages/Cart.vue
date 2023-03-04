@@ -61,7 +61,7 @@ const displayConfirmDialog = ref(false);
                     <div class="col text-end">Shipping:</div>
                     <div class="col text-start">
                       <span class="cart__form-price">
-                        {{ freeShipping ? "Free" : "50€" }}
+                        {{ freeShipping ? "Free" : "5€" }}
                       </span>
                     </div>
                   </div>

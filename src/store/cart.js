@@ -17,11 +17,16 @@ export const useCartStore = defineStore({
     },
 
     totalPrice: (state) => {
-      return state.fullCart.reduce((total, item) => {
+      const totalPrice = state.fullCart.reduce((total, item) => {
         const { price, count } = item;
         total += price * count;
         return total;
       }, 0);
+
+      if (!state.freeShipping) {
+        return totalPrice + 5;
+      }
+      return totalPrice;
     },
 
     subTotal: (state) => {
