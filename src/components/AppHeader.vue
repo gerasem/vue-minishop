@@ -4,7 +4,8 @@ import { useItemsStore } from "@/store/items";
 import { useCartStore } from "@/store/cart";
 import { useI18n } from "vue-i18n";
 import { useRouter, useRoute } from "vue-router";
-import { watch } from "vue";
+import { watch, reactive } from "vue";
+import gsap from "gsap";
 
 const { t, locale } = useI18n({ useScope: "global" });
 const router = useRouter();
@@ -46,6 +47,14 @@ watch(search, (newValue, oldValue) => {
       loading.value = false;
     }, 500);
   }
+});
+
+const totalCountAnimated = reactive({
+  number: totalCount.value,
+});
+
+watch(totalCount, (n) => {
+  gsap.to(totalCountAnimated, { duration: 0.5, number: Number(n) || 0 });
 });
 </script>
 
@@ -124,7 +133,7 @@ watch(search, (newValue, oldValue) => {
             >
               <ui-icon
                 icon="bag"
-                :count="totalCount"
+                :count="totalCountAnimated.number.toFixed()"
               >
               </ui-icon>
             </router-link>

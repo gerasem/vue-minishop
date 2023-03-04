@@ -8,7 +8,7 @@ const props = defineProps({
   },
 
   count: {
-    type: Number,
+    type: [Number, String],
     required: false,
   },
 });

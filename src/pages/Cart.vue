@@ -18,17 +18,14 @@ const couponCode = ref("");
 const displayConfirmDialog = ref(false);
 
 const totalPriceAnimated = reactive({
-  number: 0,
+  number: totalPrice.value,
 });
 
 const subTotalAnimated = reactive({
-  number: 0,
+  number: subTotal.value,
 });
 
-onMounted(() => {
-  totalPriceAnimated.value = totalPrice;
-  subTotalAnimated.value = subTotal;
-});
+
 
 watch(totalPrice, (n) => {
   gsap.to(totalPriceAnimated, { duration: 0.5, number: Number(n) || 0 });
@@ -70,9 +67,7 @@ watch(subTotal, (n) => {
                     <div class="col text-end">Sub-Total:</div>
                     <div class="col text-start">
                       <span class="cart__form-price"
-                        >{{
-                            subTotalAnimated.number.toFixed(2)
-                        }}€</span
+                        >{{ subTotalAnimated.number.toFixed(2) }}€</span
                       >
                     </div>
                   </div>
