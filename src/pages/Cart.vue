@@ -7,7 +7,9 @@ import CartItem from "@/components/CartItem.vue";
 import { ref, watch, onMounted, reactive } from "vue";
 import Dialog from "primevue/dialog";
 import gsap from "gsap";
+import { useToast } from "primevue/usetoast";
 
+const toast = useToast();
 const { loading, serverError } = storeToRefs(useItemsStore());
 const { getItems } = useItemsStore();
 getItems();
@@ -50,6 +52,11 @@ const closeConfirmation = () => {
 const deleteItemsFromCart = () => {
   deleteCart();
   displayConfirmDialog.value = false;
+  toast.add({
+    summary: "Confirmed",
+    detail: "Cart deleted",
+    life: 3000,
+  });
 };
 </script>
 

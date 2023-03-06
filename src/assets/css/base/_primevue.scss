@@ -1,0 +1,67 @@
+.p-toast-message {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+}
+
+.error-message {
+  .p-toast-message {
+    color: $color-primary;
+    box-shadow: 0 10px 40px $color-primary-opacity !important;
+  }
+
+  .p-toast-icon-close-icon {
+    color: $color-primary;
+  }
+}
+
+.p-toast {
+  min-width: 25rem;
+  width: auto;
+  & .p-toast-message.p-toast-message-error {
+    background-color: #fff;
+    color: $color-primary;
+    border-color: #fff;
+    & .p-toast-icon-close {
+      color: $color-primary;
+    }
+  }
+}
+
+.p-component {
+  font-family: inherit !important;
+}
+
+.p-toast-icon-close {
+  &:focus {
+    box-shadow: none !important;
+  }
+}
+
+.p-button {
+  &.p-button-danger {
+    background: $color-primary;
+    border: 1px solid $color-primary;
+    border-radius: 0;
+    padding: 5px 20px;
+  }
+  &.p-button-text {
+    background-color: transparent;
+    color: $color-text;
+    border-color: transparent;
+    padding: 5px 20px;
+  }
+}
+
+.p-confirm-popup {
+  & .p-confirm-popup-message {
+    margin-left: 0;
+  }
+  &.p-component.p-ripple-disabled {
+    border-color: $border-color;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.p-confirm-popup:before {
+  border-bottom-color: #ebebeb;
+}

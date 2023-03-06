@@ -9,6 +9,7 @@ import "@/assets/css/main.scss";
 import { setupI18n } from "./i18n";
 import { setupRouter } from "./router";
 import { createPinia } from "pinia";
+import ConfirmationService from 'primevue/confirmationservice';
 
 const app = createApp(App);
 
@@ -33,6 +34,7 @@ app
   .use(createPinia())
   .use(PrimeVue)
   .use(ToastService)
+  .use(ConfirmationService)
   .use(router)
   .use(i18n)
   .mount("#app");

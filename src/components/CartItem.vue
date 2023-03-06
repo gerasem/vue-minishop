@@ -1,6 +1,12 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useCartStore } from "@/store/cart";
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
+import ConfirmPopup from "primevue/confirmpopup";
+
+const confirm = useConfirm();
+const toast = useToast();
 const { deleteItem, decrementCount, incrementCount, changeCount } =
   useCartStore();
 
@@ -32,16 +38,41 @@ const onChangeQuantity = (event) => {
   }
 };
 const onBlurQuantity = (event) => {
-  inputError.value = false
+  inputError.value = false;
 };
 
 const cartInput = ref(null);
 const clickOnInput = (event) => {
   cartInput.value.select();
 };
+const itemId = ref("");
+const deleteItemWithConfirm = (event, item) => {
+  itemId.value = item.id;
+
+  confirm.require({
+    target: event.currentTarget,
+    message: "Do you want to delete this item?",
+    acceptClass: "p-button-danger",
+    accept: () => {
+      toast.add({
+        summary: "Confirmed",
+        detail: "Record deleted",
+        life: 3000,
+      });
+      deleteItem(item);
+    },
+    onShow: () => {
+    },
+    onHide: () => {
+      itemId.value = "";
+    },
+  });
+};
 </script>
 
 <template>
+  <ConfirmPopup v-if="item.id === itemId"></ConfirmPopup>
+
   <div class="cart__item">
     <router-link :to="item.slug ?? item">
       <div class="cart__image-container">
@@ -100,7 +131,7 @@ const clickOnInput = (event) => {
     <ui-icon
       icon="x-lg"
       class="ms-3"
-      @click="deleteItem(item)"
+      @click="deleteItemWithConfirm($event, item)"
     >
     </ui-icon>
   </div>

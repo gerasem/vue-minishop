@@ -61,7 +61,7 @@ initShoppingCart();
   <Toast position="top-right">
     <template #message="slotProps">
       <div class="flex-fill me-2">
-        {{ slotProps.message.summary }}
+        <strong class="me-2">{{ slotProps.message.summary }}</strong>
         {{ slotProps.message.detail }}
       </div>
     </template>
@@ -75,36 +75,5 @@ initShoppingCart();
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-.p-toast-message {
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-  background-color: #fff;
-}
-
-.error-message {
-  .p-toast-message {
-    color: $color-primary;
-    box-shadow: 0 10px 40px $color-primary-opacity !important;
-  }
-
-  .p-toast-icon-close-icon {
-    color: $color-primary;
-  }
-}
-
-.p-toast {
-  min-width: 25rem;
-  width: auto;
-}
-
-.p-component {
-  font-family: inherit !important;
-}
-
-.p-toast-icon-close {
-  &:focus {
-    box-shadow: none !important;
-  }
 }
 </style>
