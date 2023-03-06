@@ -30,7 +30,7 @@ const minHeightForTotalCount = computed(() => {
     </i>
 
     <span
-      v-if="count"
+      v-if="count && count !== '0'"
       class="icon__count"
       :style="minHeightForTotalCount"
     >
