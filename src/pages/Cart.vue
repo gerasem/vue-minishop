@@ -12,9 +12,10 @@ const { loading, serverError } = storeToRefs(useItemsStore());
 const { getItems } = useItemsStore();
 getItems();
 
-const { deleteCart, fullCart, totalPrice, subTotal, freeShipping } =
-  storeToRefs(useCartStore());
-const { checkCouponCode } = useCartStore();
+const { fullCart, totalPrice, subTotal, freeShipping } = storeToRefs(
+  useCartStore()
+);
+const { checkCouponCode, deleteCart } = useCartStore();
 const couponCode = ref("");
 const displayConfirmDialog = ref(false);
 
@@ -36,6 +37,19 @@ watch(subTotal, (n) => {
 
 const applyCoupon = () => {
   checkCouponCode();
+};
+
+const openConfirmation = () => {
+  displayConfirmDialog.value = true;
+};
+
+const closeConfirmation = () => {
+  displayConfirmDialog.value = false;
+};
+
+const deleteItemsFromCart = () => {
+  deleteCart();
+  displayConfirmDialog.value = false;
 };
 </script>
 
@@ -168,7 +182,7 @@ const applyCoupon = () => {
           </ui-button>
           <ui-button
             icon="check-lg"
-            @click="deleteCart()"
+            @click="deleteItemsFromCart()"
             class="btn-outline-primary"
             autofocus
           >

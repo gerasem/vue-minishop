@@ -128,6 +128,8 @@ export const useCartStore = defineStore({
 
     deleteCart() {
       this.cartList = [];
+      this.fullCart = [];
+      localStorage.removeItem("itemsInCart");
     },
 
     checkCouponCode(coupon) {
