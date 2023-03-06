@@ -8,6 +8,7 @@ import { ref, watch, onMounted, reactive } from "vue";
 import Dialog from "primevue/dialog";
 import gsap from "gsap";
 import { useToast } from "primevue/usetoast";
+import ConfirmPopup from "primevue/confirmpopup";
 
 const toast = useToast();
 const { loading, serverError } = storeToRefs(useItemsStore());
@@ -73,6 +74,8 @@ const deleteItemsFromCart = () => {
       <p v-if="serverError">{{ serverError }}</p>
       <h1>Cart</h1>
       <template v-if="fullCart.length">
+        <ConfirmPopup></ConfirmPopup>
+
         <div class="row">
           <div class="col-lg-8">
             <template
