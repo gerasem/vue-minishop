@@ -7,6 +7,28 @@ export const useCartStore = defineStore({
   state: () => ({
     cartList: [],
     fullCart: [],
+    couponList: [
+      {
+        test: {
+          type: "%",
+          value: 10,
+          min_order: 100,
+        },
+      },
+      {
+        abc: {
+          type: "€",
+          value: 50,
+          min_order: 100,
+        },
+      },
+    ],
+    coupon: {
+      code: "",
+      type: null,
+      value: null,
+      minOrder: null,
+    },
   }),
 
   getters: {
@@ -106,6 +128,10 @@ export const useCartStore = defineStore({
 
     deleteCart() {
       this.cartList = [];
+    },
+
+    checkCouponCode(coupon) {
+      window.test = this.couponList;
     },
   },
 });

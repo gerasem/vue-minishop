@@ -14,6 +14,7 @@ getItems();
 
 const { deleteCart, fullCart, totalPrice, subTotal, freeShipping } =
   storeToRefs(useCartStore());
+const { checkCouponCode } = useCartStore();
 const couponCode = ref("");
 const displayConfirmDialog = ref(false);
 
@@ -25,8 +26,6 @@ const subTotalAnimated = reactive({
   number: subTotal.value,
 });
 
-
-
 watch(totalPrice, (n) => {
   gsap.to(totalPriceAnimated, { duration: 0.5, number: Number(n) || 0 });
 });
@@ -34,6 +33,10 @@ watch(totalPrice, (n) => {
 watch(subTotal, (n) => {
   gsap.to(subTotalAnimated, { duration: 0.5, number: Number(n) || 0 });
 });
+
+const applyCoupon = () => {
+  checkCouponCode();
+};
 </script>
 
 <template>
@@ -110,6 +113,7 @@ watch(subTotal, (n) => {
                         v-model="couponCode"
                         placeholder="Coupon code"
                         icon="ticket"
+                        @applyCoupon="applyCoupon()"
                         description="For example: <strong>test</strong> or <strong>abc</strong>"
                       ></ui-input>
                     </div>

@@ -1,4 +1,6 @@
 <script setup>
+import { computed } from "vue";
+
 const props = defineProps({
   icon: {
     type: String,
@@ -22,7 +24,15 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits({ "update:modelValue": null });
+const getIcon = computed(() => {
+  if (props.icon === "search") {
+    return props.modelValue ? "x-lg" : "search";
+  } else {
+    return props.icon;
+  }
+});
+
+const emit = defineEmits({ "update:modelValue": null, applyCoupon: null });
 
 const updateInput = (event) => {
   emit("update:modelValue", event.target.value);
@@ -33,6 +43,9 @@ const handleOnBlur = () => {};
 const handleClickOnIcon = () => {
   if (props.modelValue) {
     emit("update:modelValue", "");
+  }
+  if (props.icon === "ticket") {
+    emit("applyCoupon");
   }
 };
 </script>
@@ -52,25 +65,13 @@ const handleClickOnIcon = () => {
       />
 
       <template v-if="icon">
-        <template v-if="icon === 'search'">
-          <ui-icon
-            class="icon__input-field"
-            :class="{ 'icon__input-field--active': modelValue }"
-            :icon="modelValue ? 'x-lg' : 'search'"
-            @click="handleClickOnIcon"
-          >
-          </ui-icon>
-        </template>
-
-        <template v-else>
-          <ui-icon
-            class="icon__input-field"
-            :class="{ 'icon__input-field--active': modelValue }"
-            :icon="icon"
-            @click="handleClickOnIcon"
-          >
-          </ui-icon>
-        </template>
+        <ui-icon
+          class="icon__input-field"
+          :class="{ 'icon__input-field--active': modelValue }"
+          :icon="getIcon"
+          @click="handleClickOnIcon"
+        >
+        </ui-icon>
       </template>
     </div>
   </div>
