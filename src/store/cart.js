@@ -74,12 +74,6 @@ export const useCartStore = defineStore({
     couponError(state) {
       console.log(state.coupon.code, state.coupon.minOrder, state.subTotal);
       if (state.coupon.code && state.coupon.minOrder > state.subTotal) {
-        // state.coupon = {
-        //   code: "",
-        //   type: null,
-        //   value: null,
-        //   minOrder: null,
-        // };
         return `Min order ${state.coupon.minOrder} €`;
       }
       return false;
@@ -113,7 +107,8 @@ export const useCartStore = defineStore({
     initShoppingCart() {
       const readLS = localStorage.getItem("itemsInCart");
       if (readLS) {
-        this.cartList = JSON.parse(readLS);
+        const itemsInLS = JSON.parse(readLS);
+        this.cartList = itemsInLS.filter((i) => i.count !== "");
       }
     },
 

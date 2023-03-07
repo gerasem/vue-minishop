@@ -3,6 +3,7 @@ import { ref, computed } from "vue";
 import { useCartStore } from "@/store/cart";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import { emit } from "process";
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -16,6 +17,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits({ cartHasErrors: null });
+
 const getSale = computed(() => {
   if (!props.item.old_price) return;
   return ((props.item.price / props.item.old_price - 1) * 100).toFixed(0);
@@ -24,9 +27,9 @@ const getSale = computed(() => {
 const inputError = ref(false);
 const onChangeQuantity = (event) => {
   console.log(+event.target.value);
-  inputError.value = +event.target.value || +event.target.value > 999;
+  inputError.value = +event.target.value < 1 || +event.target.value > 999;
   if (+event.target.value === 0) {
-    changeCount(props.item, 1);
+    changeCount(props.item, "");
   }
   if (+event.target.value > 999) {
     const first3Letters = event.target.value.substring(0, 3);
@@ -37,7 +40,9 @@ const onChangeQuantity = (event) => {
   }
 };
 const onBlurQuantity = (event) => {
-  inputError.value = false;
+  console.log("VALUE", event.target.value);
+  inputError.value = event.target.value === "";
+  emit("cartHasErrors", inputError.value);
 };
 
 const cartInput = ref(null);
@@ -57,7 +62,6 @@ const deleteItemWithConfirm = (event, item) => {
       });
       deleteItem(item);
     },
-  
   });
 };
 </script>
