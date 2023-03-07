@@ -1,5 +1,6 @@
 <script setup>
 import AppHeader from "@/components/AppHeader.vue";
+import AppFooter from "@/components/AppFooter.vue";
 import { watch, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
@@ -68,6 +69,8 @@ initShoppingCart();
   </Toast>
 
   <router-view />
+
+  <app-footer></app-footer>
 </template>
 
 <style lang="scss">

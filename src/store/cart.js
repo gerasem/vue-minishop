@@ -37,7 +37,7 @@ export const useCartStore = defineStore({
         .reduce((count, num) => {
           if (count === "0") return;
           return count + num;
-        }, 0) ;
+        }, 0);
     },
 
     totalPrice: (state) => {
