@@ -19,6 +19,7 @@ const clickOnIcon = () => emit("clickOnButton");
 </script>
 
 <template>
+  
   <button
     type="button"
     @click="clickOnIcon()"

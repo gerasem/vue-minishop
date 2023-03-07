@@ -15,7 +15,7 @@ const { loading, serverError } = storeToRefs(useItemsStore());
 const { getItems } = useItemsStore();
 getItems();
 
-const { fullCart, totalPrice, subTotal, freeShipping, coupon, couponError } =
+const { fullCart, totalPrice, subTotal, freeShipping, coupon, couponError, discount } =
   storeToRefs(useCartStore());
 const { checkCouponCode, deleteCart } = useCartStore();
 const couponCode = ref("");
@@ -59,9 +59,9 @@ const deleteItemsFromCart = () => {
   });
 };
 
-const cartCanBeSubmitted = ref(true);
+const disabledBuyButton = ref(false);
 const cartHasErrors = (event) => {
-  cartCanBeSubmitted.value = event;
+  disabledBuyButton.value = event;
 };
 </script>
 
@@ -88,7 +88,7 @@ const cartHasErrors = (event) => {
             >
               <cart-item
                 :item="item"
-                @formHasErrors="cartHasErrors($event)"
+                @cartHasErrors="cartHasErrors($event)"
               >
               </cart-item>
             </template>
@@ -132,11 +132,11 @@ const cartHasErrors = (event) => {
                     v-if="coupon.code && !couponError"
                   >
                     <div class="col text-end cart__form-price--discount">
-                      Discount:
+                      Discount ({{ coupon.value }} {{ coupon.type }}):
                     </div>
                     <div class="col text-start">
                       <span class="cart__form-price cart__form-price--discount">
-                        {{ coupon.value }} {{ coupon.type }}
+                        {{ discount.toFixed(2) }} €
                       </span>
                     </div>
                   </div>
@@ -168,7 +168,7 @@ const cartHasErrors = (event) => {
                         v-show="fullCart.length"
                         class="btn-primary"
                         icon="bag-check"
-                        :disabled="!cartCanBeSubmitted"
+                        :disabled="disabledBuyButton"
                       >
                         Buy
                       </ui-button>

@@ -3,7 +3,6 @@ import { ref, computed } from "vue";
 import { useCartStore } from "@/store/cart";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
-import { emit } from "process";
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -28,6 +27,7 @@ const inputError = ref(false);
 const onChangeQuantity = (event) => {
   console.log(+event.target.value);
   inputError.value = +event.target.value < 1 || +event.target.value > 999;
+  emit("cartHasErrors", inputError.value);
   if (+event.target.value === 0) {
     changeCount(props.item, "");
   }
@@ -40,9 +40,7 @@ const onChangeQuantity = (event) => {
   }
 };
 const onBlurQuantity = (event) => {
-  console.log("VALUE", event.target.value);
   inputError.value = event.target.value === "";
-  emit("cartHasErrors", inputError.value);
 };
 
 const cartInput = ref(null);

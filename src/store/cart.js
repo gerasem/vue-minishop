@@ -27,6 +27,7 @@ export const useCartStore = defineStore({
       value: null,
       minOrder: null,
     },
+    discount: null,
   }),
 
   getters: {
@@ -46,19 +47,20 @@ export const useCartStore = defineStore({
       if (!state.freeShipping) {
         return totalPrice + 5;
       }
-      console.log("updated getter");
+      console.log("updated getter", state.coupon.code,  !state.couponError);
       if (state.coupon.code && !state.couponError) {
-        console.log("coupon is not empty");
-        if (!state.couponError) {
+        console.log("coupon is not empty", !state.couponError);
+        if (state.couponError) {
           return totalPrice;
         }
+        let discountPrice;
         if (state.coupon.type === "€") {
-          console.log("get total", totalPrice - state.coupon.value);
-
-          return totalPrice - state.coupon.value;
+          discountPrice =  totalPrice - state.coupon.value;
         } else if (state.coupon.type === "%") {
-          return (totalPrice * (100 - state.coupon.value)) / 100;
+          discountPrice = (totalPrice * (100 - state.coupon.value)) / 100;
         }
+        state.discount = state.subTotal - discountPrice;
+        return discountPrice;
       }
       return totalPrice;
     },
@@ -72,7 +74,7 @@ export const useCartStore = defineStore({
     },
 
     couponError(state) {
-      console.log(state.coupon.code, state.coupon.minOrder, state.subTotal);
+      console.log('COUPON ERROR',state.coupon.code, state.coupon.minOrder, state.subTotal);
       if (state.coupon.code && state.coupon.minOrder > state.subTotal) {
         return `Min order ${state.coupon.minOrder} €`;
       }
