@@ -24,25 +24,13 @@ const {
   couponError,
   discount,
 } = storeToRefs(useCartStore());
+
+onMounted(() => {
+  couponCode.value = coupon.value.code;
+});
 const { checkCouponCode, deleteCart } = useCartStore();
 const couponCode = ref("");
 const displayConfirmDialog = ref(false);
-
-// const totalPriceAnimated = reactive({
-//   number: totalPrice.value,
-// });
-
-// const subTotalAnimated = reactive({
-//   number: subTotal.value,
-// });
-
-// watch(totalPrice, (n) => {
-//   gsap.to(totalPriceAnimated, { duration: 0.5, number: Number(n) || 0 });
-// });
-
-// watch(subTotal, (n) => {
-//   gsap.to(subTotalAnimated, { duration: 0.5, number: Number(n) || 0 });
-// });
 
 const applyCoupon = () => {
   checkCouponCode(couponCode.value);

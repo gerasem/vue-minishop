@@ -27,7 +27,7 @@ export const useCartStore = defineStore({
       value: null,
       minOrder: null,
     },
-    discount: null,
+    discount: 0,
   }),
 
   getters: {
@@ -37,7 +37,7 @@ export const useCartStore = defineStore({
         .reduce((count, num) => {
           if (count === "0") return;
           return count + num;
-        }, 0);
+        }, 0) ;
     },
 
     totalPrice: (state) => {
@@ -76,7 +76,7 @@ export const useCartStore = defineStore({
 
     couponError(state) {
       if (state.coupon.code && state.coupon.minOrder > state.subTotal) {
-        return `Min order ${state.coupon.minOrder} €`;
+        return `Min order ${state.coupon.minOrder} € for coupon ${state.coupon.code}`;
       }
       return false;
     },
