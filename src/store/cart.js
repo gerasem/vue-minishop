@@ -112,10 +112,15 @@ export const useCartStore = defineStore({
         const itemsInLS = JSON.parse(readLS);
         this.cartList = itemsInLS.filter((i) => i.count !== "");
       }
+      const readCouponLS = localStorage.getItem("coupon");
+      if (readCouponLS) {
+        this.coupon = JSON.parse(readCouponLS);
+      }
     },
 
     saveToLS() {
       localStorage.setItem("itemsInCart", JSON.stringify(this.cartList));
+      localStorage.setItem("coupon", JSON.stringify(this.coupon));
     },
 
     deleteItem(item) {
@@ -173,6 +178,7 @@ export const useCartStore = defineStore({
           value: null,
           minOrder: null,
         };
+        this.saveToLS()
       }
     },
   },
