@@ -5,7 +5,6 @@ import { useCartStore } from "@/store/cart";
 import { useI18n } from "vue-i18n";
 import { useRouter, useRoute } from "vue-router";
 import { watch, reactive } from "vue";
-import gsap from "gsap";
 
 const { t, locale } = useI18n({ useScope: "global" });
 const router = useRouter();
@@ -29,7 +28,6 @@ const handleClickOnLogo = () => {
 };
 
 watch(search, (newValue, oldValue) => {
-  console.log("watch search", newValue);
   if (newValue.length > 0) {
     router.push({
       name: "search",
@@ -47,14 +45,6 @@ watch(search, (newValue, oldValue) => {
       loading.value = false;
     }, 500);
   }
-});
-
-const totalCountAnimated = reactive({
-  number: totalCount.value,
-});
-
-watch(totalCount, (n) => {
-  gsap.to(totalCountAnimated, { duration: 0.5, number: Number(n) || 0 });
 });
 </script>
 
@@ -78,14 +68,14 @@ watch(totalCount, (n) => {
         <div class="col-auto">
           <div class="header__languages">
             <span
-              :class="$i18n.locale === 'de' ? 'header__language--current' : ''"
+              :class="{ 'header__language--current': $i18n.locale === 'de' }"
               class="header__language"
               @click="setLocale('de')"
               >De</span
             >
             <span class="header__language-separator">/</span>
             <span
-              :class="$i18n.locale === 'en' ? 'header__language--current' : ''"
+              :class="{ 'header__language--current': $i18n.locale === 'en' }"
               class="header__language"
               @click="setLocale('en')"
               >En</span
@@ -133,7 +123,7 @@ watch(totalCount, (n) => {
             >
               <ui-icon
                 icon="bag"
-                :count="totalCountAnimated.number.toFixed()"
+                :count="totalCount"
               >
               </ui-icon>
             </router-link>

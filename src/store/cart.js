@@ -34,7 +34,10 @@ export const useCartStore = defineStore({
     totalCount: (state) => {
       return state.cartList
         .map((i) => i.count)
-        .reduce((count, num) => count + num, 0);
+        .reduce((count, num) => {
+          if (count === "0") return;
+          return count + num;
+        }, 0);
     },
 
     totalPrice: (state) => {
@@ -47,15 +50,13 @@ export const useCartStore = defineStore({
       if (!state.freeShipping) {
         return totalPrice + 5;
       }
-      console.log("updated getter", state.coupon.code,  !state.couponError);
       if (state.coupon.code && !state.couponError) {
-        console.log("coupon is not empty", !state.couponError);
         if (state.couponError) {
           return totalPrice;
         }
         let discountPrice;
         if (state.coupon.type === "€") {
-          discountPrice =  totalPrice - state.coupon.value;
+          discountPrice = totalPrice - state.coupon.value;
         } else if (state.coupon.type === "%") {
           discountPrice = (totalPrice * (100 - state.coupon.value)) / 100;
         }
@@ -74,7 +75,6 @@ export const useCartStore = defineStore({
     },
 
     couponError(state) {
-      console.log('COUPON ERROR',state.coupon.code, state.coupon.minOrder, state.subTotal);
       if (state.coupon.code && state.coupon.minOrder > state.subTotal) {
         return `Min order ${state.coupon.minOrder} €`;
       }
@@ -144,12 +144,7 @@ export const useCartStore = defineStore({
     },
 
     changeCount(item, count) {
-      console.log("change count", item, count);
       this.cartList.find((i) => i.id === item.id).count = count;
-      console.log(
-        "new count",
-        this.cartList.find((i) => i.id === item.id).count
-      );
       this.saveToLS();
       this.createFullCard();
     },
@@ -165,7 +160,6 @@ export const useCartStore = defineStore({
       this.couponList.forEach((c) => {
         if (c.code === coupon.toLowerCase()) {
           couponFound = true;
-          console.log("apply coupon");
           this.coupon = this.couponList.find(
             (c) => c.code === coupon.toLowerCase()
           );
@@ -178,7 +172,7 @@ export const useCartStore = defineStore({
           value: null,
           minOrder: null,
         };
-        this.saveToLS()
+        this.saveToLS();
       }
     },
   },

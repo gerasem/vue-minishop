@@ -25,7 +25,6 @@ const getSale = computed(() => {
 
 const inputError = ref(false);
 const onChangeQuantity = (event) => {
-  console.log(+event.target.value);
   inputError.value = +event.target.value < 1 || +event.target.value > 999;
   emit("cartHasErrors", inputError.value);
   if (+event.target.value === 0) {

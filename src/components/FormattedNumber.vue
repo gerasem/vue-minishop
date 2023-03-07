@@ -32,7 +32,6 @@ const formatePrice = (price) => {
 watch(
   () => props.number,
   (n) => {
-    console.log("watch", n, num);
     gsap.to(num, { duration: 0.5, number: Number(n) || 0 });
   }
 );
@@ -44,7 +43,7 @@ watch(
   </template>
 
   <template v-else-if="props.type === 'COUNT'">
-    {{ num.number }}
+    {{ num.number.toFixed() }}
   </template>
 </template>
 

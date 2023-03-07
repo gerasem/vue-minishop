@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from "vue";
+import FormattedNumber from "@/components/FormattedNumber.vue";
 
 const props = defineProps({
   icon: {
@@ -34,7 +35,7 @@ const minHeightForTotalCount = computed(() => {
       class="icon__count"
       :style="minHeightForTotalCount"
     >
-      {{ count }}
+    <formatted-number :number="count" type="COUNT"></formatted-number>
     </span>
   </div>
 </template>
