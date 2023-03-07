@@ -3,6 +3,7 @@ import { storeToRefs } from "pinia";
 import { useItemsStore } from "@/store/items";
 import AppItem from "@/components/AppItem.vue";
 import AppLoading from "@/components/AppLoading.vue";
+import AppText from "@/components/AppText.vue";
 import AppCategory from "@/components/AppCategory.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
@@ -99,6 +100,20 @@ const filteredItems = computed(() => {
           <div class="col">Items not found</div>
         </template>
       </div>
+
+      <app-text header="About Us"
+        >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus nam
+        sed vitae necessitatibus mollitia expedita molestiae illum facilis
+        recusandae quo culpa dicta rem porro impedit ut aut, ex veritatis
+        doloribus? Ut, ipsa odio unde laborum, fuga voluptatum accusantium sed
+        alias qui sint explicabo quaerat repudiandae in quod enim dolores,
+        perspiciatis voluptate facere! Adipisci nihil, ullam asperiores iusto
+        aliquid laboriosam natus eum vel sit cumque sunt eligendi esse a quod
+        obcaecati? Repudiandae a eius numquam. Alias similique tempore doloribus
+        amet, soluta nisi dignissimos praesentium voluptatem iste aliquam
+        voluptas vero ipsa sed qui quae. Laborum unde veritatis obcaecati optio
+        animi dolor officiis?</app-text
+      >
     </main>
   </Transition>
 </template>
