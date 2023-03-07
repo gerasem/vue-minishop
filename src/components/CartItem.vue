@@ -24,9 +24,9 @@ const getSale = computed(() => {
 const inputError = ref(false);
 const onChangeQuantity = (event) => {
   console.log(+event.target.value);
-  inputError.value = +event.target.value || +event.target.value > 999;
+  inputError.value = +event.target.value < 1 || +event.target.value > 999;
   if (+event.target.value === 0) {
-    changeCount(props.item, 1);
+    changeCount(props.item, "");
   }
   if (+event.target.value > 999) {
     const first3Letters = event.target.value.substring(0, 3);
@@ -37,7 +37,8 @@ const onChangeQuantity = (event) => {
   }
 };
 const onBlurQuantity = (event) => {
-  inputError.value = false;
+  console.log('VALUE', event.target.value)
+  inputError.value = event.target.value === "";
 };
 
 const cartInput = ref(null);
@@ -57,7 +58,6 @@ const deleteItemWithConfirm = (event, item) => {
       });
       deleteItem(item);
     },
-  
   });
 };
 </script>
