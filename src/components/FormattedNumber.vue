@@ -1,6 +1,10 @@
 <script setup>
 import gsap from "gsap";
 import { ref, computed, watch, reactive } from "vue";
+import { useI18n } from "vue-i18n";
+import { LOCALE_NAMES } from "@/i18n";
+
+const { t, locale } = useI18n({ useScope: "global" });
 
 const props = defineProps({
   number: {
@@ -19,7 +23,10 @@ const num = reactive({
 });
 
 const formatePrice = (price) => {
-  return price.toFixed(2) + " €";
+  return new Intl.NumberFormat(LOCALE_NAMES[locale.value], {
+    style: "currency",
+    currency: "EUR",
+  }).format(price);
 };
 
 watch(
@@ -32,7 +39,13 @@ watch(
 </script>
 
 <template>
-  {{ formatePrice(num.number) }}
+  <template v-if="props.type === 'PRICE'">
+    {{ formatePrice(num.number) }}
+  </template>
+
+  <template v-else-if="props.type === 'COUNT'">
+    {{ num.number }}
+  </template>
 </template>
 
 <style scoped lang="scss"></style>

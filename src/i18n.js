@@ -2,6 +2,10 @@ import { nextTick } from "vue";
 import { createI18n } from "vue-i18n";
 
 export const SUPPORT_LOCALES = ["en", "de"];
+export const LOCALE_NAMES = {
+  en: "en-EN",
+  de: "de-DE"
+};
 
 function checkDefaultLanguage() {
   let matched = null;
