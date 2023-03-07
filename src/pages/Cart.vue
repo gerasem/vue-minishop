@@ -15,9 +15,8 @@ const { loading, serverError } = storeToRefs(useItemsStore());
 const { getItems } = useItemsStore();
 getItems();
 
-const { fullCart, totalPrice, subTotal, freeShipping } = storeToRefs(
-  useCartStore()
-);
+const { fullCart, totalPrice, subTotal, freeShipping, coupon, couponError } =
+  storeToRefs(useCartStore());
 const { checkCouponCode, deleteCart } = useCartStore();
 const couponCode = ref("");
 const displayConfirmDialog = ref(false);
@@ -39,7 +38,10 @@ watch(subTotal, (n) => {
 });
 
 const applyCoupon = () => {
-  checkCouponCode();
+  checkCouponCode(couponCode.value);
+  // if(couponError.value) {
+  //   couponCode.value = ""
+  // }
 };
 
 const openConfirmation = () => {
@@ -72,7 +74,7 @@ const deleteItemsFromCart = () => {
       class="container-fluid flex-grow-1"
     >
       <p v-if="serverError">{{ serverError }}</p>
-      <h1>Cart</h1>
+      <h1>Cart{{ coupon }}</h1>
       <template v-if="fullCart.length">
         <ConfirmPopup></ConfirmPopup>
 
@@ -87,7 +89,18 @@ const deleteItemsFromCart = () => {
           </div>
           <div class="col-lg-4">
             <div class="cart__form">
-              <div class="cart__info">Free Shipping on all orders over 50€</div>
+              <div
+                v-if="!couponError"
+                class="cart__info"
+              >
+                Free Shipping on all orders over 50€
+              </div>
+              <div
+                v-else
+                class="cart__info cart__info--error"
+              >
+                {{ couponError }}
+              </div>
               <div class="cart__form-container">
                 <div class="text-center">
                   <div class="row">
@@ -110,14 +123,14 @@ const deleteItemsFromCart = () => {
 
                   <div
                     class="row"
-                    v-if="false"
+                    v-if="coupon.code"
                   >
                     <div class="col text-end cart__form-price--discount">
                       Discount:
                     </div>
                     <div class="col text-start">
                       <span class="cart__form-price cart__form-price--discount">
-                        {{ couponValue }} {{ couponType }}
+                        {{ coupon.value }} {{ coupon.type }}
                       </span>
                     </div>
                   </div>
@@ -238,6 +251,10 @@ const deleteItemsFromCart = () => {
     color: $color-secondary;
     font-weight: 600;
     line-height: 24px;
+    &--error {
+      background-color: rgba(235, 62, 125, 0.25);
+      color: $color-primary;
+    }
   }
 }
 </style>

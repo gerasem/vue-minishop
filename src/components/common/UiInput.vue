@@ -38,14 +38,19 @@ const updateInput = (event) => {
   emit("update:modelValue", event.target.value);
 };
 
-const handleOnBlur = () => {};
-
-const handleClickOnIcon = () => {
-  if (props.modelValue) {
-    emit("update:modelValue", "");
-  }
+const handleOnBlur = () => {
   if (props.icon === "ticket") {
     emit("applyCoupon");
+  }
+};
+
+const handleClickOnIcon = () => {
+  if (props.icon === "ticket") {
+    emit("applyCoupon");
+  } else {
+    if (props.modelValue) {
+      emit("update:modelValue", "");
+    }
   }
 };
 </script>
@@ -74,6 +79,11 @@ const handleClickOnIcon = () => {
         </ui-icon>
       </template>
     </div>
+    <div
+      class="form-text input__description"
+      v-if="description"
+      v-html="description"
+    ></div>
   </div>
 </template>
 

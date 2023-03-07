@@ -9,18 +9,16 @@ export const useCartStore = defineStore({
     fullCart: [],
     couponList: [
       {
-        test: {
-          type: "%",
-          value: 10,
-          min_order: 100,
-        },
+        code: "test",
+        type: "%",
+        value: 10,
+        minOrder: 100,
       },
       {
-        abc: {
-          type: "€",
-          value: 50,
-          min_order: 100,
-        },
+        code: "abc",
+        type: "€",
+        value: 50,
+        minOrder: 100,
       },
     ],
     coupon: {
@@ -38,6 +36,20 @@ export const useCartStore = defineStore({
         .reduce((count, num) => count + num, 0);
     },
 
+    couponError(state) {
+      console.log(state.coupon.code, state.coupon.minOrder > state.totalPrice);
+      if (state.coupon.code && state.coupon.minOrder > state.totalPrice) {
+        // state.coupon = {
+        //   code: "",
+        //   type: null,
+        //   value: null,
+        //   minOrder: null,
+        // };
+        return `Min order ${state.coupon.minOrder} €`;
+      }
+      return false;
+    },
+
     totalPrice: (state) => {
       const totalPrice = state.fullCart.reduce((total, item) => {
         const { price, count } = item;
@@ -47,6 +59,20 @@ export const useCartStore = defineStore({
 
       if (!state.freeShipping) {
         return totalPrice + 5;
+      }
+      console.log("updated getter");
+      if (state.coupon.code) {
+        console.log("coupon is not empty");
+        if (!state.couponError) {
+          return totalPrice;
+        }
+        if (state.coupon.type === "€") {
+          console.log("get total", totalPrice - state.coupon.value);
+
+          return totalPrice - state.coupon.value;
+        } else if (state.coupon.type === "%") {
+          return (totalPrice * (100 - state.coupon.value)) / 100;
+        }
       }
       return totalPrice;
     },
@@ -133,7 +159,24 @@ export const useCartStore = defineStore({
     },
 
     checkCouponCode(coupon) {
-      window.test = this.couponList;
+      let couponFound = false;
+      this.couponList.forEach((c) => {
+        if (c.code === coupon.toLowerCase()) {
+          couponFound = true;
+          console.log("apply coupon");
+          this.coupon = this.couponList.find(
+            (c) => c.code === coupon.toLowerCase()
+          );
+        }
+      });
+      if (!couponFound) {
+        this.coupon = {
+          code: "",
+          type: null,
+          value: null,
+          minOrder: null,
+        };
+      }
     },
   },
 });
