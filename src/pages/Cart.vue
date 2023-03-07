@@ -39,9 +39,6 @@ watch(subTotal, (n) => {
 
 const applyCoupon = () => {
   checkCouponCode(couponCode.value);
-  // if(couponError.value) {
-  //   couponCode.value = ""
-  // }
 };
 
 const openConfirmation = () => {
@@ -60,6 +57,11 @@ const deleteItemsFromCart = () => {
     detail: "Cart deleted",
     life: 3000,
   });
+};
+
+const cartCanBeSubmitted = ref(true);
+const cartHasErrors = (event) => {
+  cartCanBeSubmitted.value = event;
 };
 </script>
 
@@ -84,7 +86,11 @@ const deleteItemsFromCart = () => {
               v-for="item in fullCart"
               :key="item.title"
             >
-              <cart-item :item="item"> </cart-item>
+              <cart-item
+                :item="item"
+                @formHasErrors="cartHasErrors($event)"
+              >
+              </cart-item>
             </template>
           </div>
           <div class="col-lg-4">
@@ -162,6 +168,7 @@ const deleteItemsFromCart = () => {
                         v-show="fullCart.length"
                         class="btn-primary"
                         icon="bag-check"
+                        :disabled="!cartCanBeSubmitted"
                       >
                         Buy
                       </ui-button>

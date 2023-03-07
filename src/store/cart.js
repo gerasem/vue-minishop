@@ -107,7 +107,8 @@ export const useCartStore = defineStore({
     initShoppingCart() {
       const readLS = localStorage.getItem("itemsInCart");
       if (readLS) {
-        this.cartList = JSON.parse(readLS);
+        const itemsInLS = JSON.parse(readLS);
+        this.cartList = itemsInLS.filter((i) => i.count !== "");
       }
     },
 

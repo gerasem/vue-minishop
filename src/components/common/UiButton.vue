@@ -5,6 +5,12 @@ const props = defineProps({
     default: "",
     required: false,
   },
+
+  disabled: {
+    type: Boolean,
+    default: false,
+    required: false,
+  },
 });
 
 const emit = defineEmits({ clickOnButton: null });
@@ -17,6 +23,7 @@ const clickOnIcon = () => emit("clickOnButton");
     type="button"
     @click="clickOnIcon()"
     class="btn button-component"
+    :disabled="disabled"
   >
     <i
       v-if="icon"

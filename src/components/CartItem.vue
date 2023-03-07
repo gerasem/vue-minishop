@@ -3,6 +3,7 @@ import { ref, computed } from "vue";
 import { useCartStore } from "@/store/cart";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import { emit } from "process";
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -15,6 +16,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const emit = defineEmits({ cartHasErrors: null });
 
 const getSale = computed(() => {
   if (!props.item.old_price) return;
@@ -37,8 +40,9 @@ const onChangeQuantity = (event) => {
   }
 };
 const onBlurQuantity = (event) => {
-  console.log('VALUE', event.target.value)
+  console.log("VALUE", event.target.value);
   inputError.value = event.target.value === "";
+  emit("cartHasErrors", inputError.value);
 };
 
 const cartInput = ref(null);
