@@ -4,9 +4,9 @@ import { useItemsStore } from "@/store/items";
 import { useCartStore } from "@/store/cart";
 import AppLoading from "@/components/AppLoading.vue";
 import CartItem from "@/components/CartItem.vue";
+import FormattedNumber from "@/components/FormattedNumber.vue";
 import { ref, watch, onMounted, reactive } from "vue";
 import Dialog from "primevue/dialog";
-import gsap from "gsap";
 import { useToast } from "primevue/usetoast";
 import ConfirmPopup from "primevue/confirmpopup";
 
@@ -15,27 +15,34 @@ const { loading, serverError } = storeToRefs(useItemsStore());
 const { getItems } = useItemsStore();
 getItems();
 
-const { fullCart, totalPrice, subTotal, freeShipping, coupon, couponError, discount } =
-  storeToRefs(useCartStore());
+const {
+  fullCart,
+  totalPrice,
+  subTotal,
+  freeShipping,
+  coupon,
+  couponError,
+  discount,
+} = storeToRefs(useCartStore());
 const { checkCouponCode, deleteCart } = useCartStore();
 const couponCode = ref("");
 const displayConfirmDialog = ref(false);
 
-const totalPriceAnimated = reactive({
-  number: totalPrice.value,
-});
+// const totalPriceAnimated = reactive({
+//   number: totalPrice.value,
+// });
 
-const subTotalAnimated = reactive({
-  number: subTotal.value,
-});
+// const subTotalAnimated = reactive({
+//   number: subTotal.value,
+// });
 
-watch(totalPrice, (n) => {
-  gsap.to(totalPriceAnimated, { duration: 0.5, number: Number(n) || 0 });
-});
+// watch(totalPrice, (n) => {
+//   gsap.to(totalPriceAnimated, { duration: 0.5, number: Number(n) || 0 });
+// });
 
-watch(subTotal, (n) => {
-  gsap.to(subTotalAnimated, { duration: 0.5, number: Number(n) || 0 });
-});
+// watch(subTotal, (n) => {
+//   gsap.to(subTotalAnimated, { duration: 0.5, number: Number(n) || 0 });
+// });
 
 const applyCoupon = () => {
   checkCouponCode(couponCode.value);
@@ -112,9 +119,10 @@ const cartHasErrors = (event) => {
                   <div class="row">
                     <div class="col text-end">Sub-Total:</div>
                     <div class="col text-start">
-                      <span class="cart__form-price"
-                        >{{ subTotalAnimated.number.toFixed(2) }}€</span
-                      >
+                      <span class="cart__form-price">
+                        <!-- {{ subTotalAnimated.number.toFixed(2) }}€ -->
+                        <formatted-number :number="subTotal"></formatted-number>
+                      </span>
                     </div>
                   </div>
 
@@ -136,7 +144,8 @@ const cartHasErrors = (event) => {
                     </div>
                     <div class="col text-start">
                       <span class="cart__form-price cart__form-price--discount">
-                        {{ discount.toFixed(2) }} €
+                        <!-- {{ discount.toFixed(2) }} € -->
+                        <formatted-number :number="discount"></formatted-number>
                       </span>
                     </div>
                   </div>
@@ -145,7 +154,10 @@ const cartHasErrors = (event) => {
                     <div class="col text-end fw-bold">Total price:</div>
                     <div class="col text-start">
                       <span class="cart__form-price cart__form-price--total">
-                        {{ totalPriceAnimated.number.toFixed(2) }}€
+                        <!-- {{ totalPriceAnimated.number.toFixed(2) }}€ -->
+                        <formatted-number
+                          :number="totalPrice"
+                        ></formatted-number>
                       </span>
                     </div>
                   </div>
