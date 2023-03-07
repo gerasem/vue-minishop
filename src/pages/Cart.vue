@@ -74,7 +74,7 @@ const deleteItemsFromCart = () => {
       class="container-fluid flex-grow-1"
     >
       <p v-if="serverError">{{ serverError }}</p>
-      <h1>Cart{{ coupon }}</h1>
+      <h1>Cart</h1>
       <template v-if="fullCart.length">
         <ConfirmPopup></ConfirmPopup>
 
@@ -123,7 +123,7 @@ const deleteItemsFromCart = () => {
 
                   <div
                     class="row"
-                    v-if="coupon.code"
+                    v-if="coupon.code && !couponError"
                   >
                     <div class="col text-end cart__form-price--discount">
                       Discount:
