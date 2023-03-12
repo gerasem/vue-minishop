@@ -10,7 +10,7 @@ export default defineConfig({
       reactivityTransform: true,
     }),
   ],
-  base: "./",
+  base: "/vue-minishop/",
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
