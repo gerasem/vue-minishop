@@ -28,11 +28,14 @@ const {
       v-if="!loading"
       class="container-fluid flex-grow-1"
     >
-      <h1>Item</h1>
+      <h1>{{ selectedItem.title }}</h1>
 
-      <pre>
-      {{ selectedItem }}
-      </pre>
+      <img
+        :src="selectedItem.image"
+        :alt="selectedItem.title"
+        style="width: 350px"
+      />
+      <pre>{{ selectedItem }}</pre>
     </main>
   </Transition>
 </template>
