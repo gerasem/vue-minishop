@@ -14,6 +14,7 @@ export const useItemsStore = defineStore({
     categories: [],
     selectedCategory: "",
     serverError: "",
+    selectedItem: {},
   }),
 
   actions: {
@@ -54,6 +55,27 @@ export const useItemsStore = defineStore({
         const response = await axios.get(`${fakeStoreUrl}/products/categories`);
         if (response.status === 200) {
           this.categories = response.data;
+        }
+      } catch (error) {
+        this.serverError = error;
+        console.error(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async getItem(id) {
+      this.loading = true;
+      if (this.selectedItem) {
+        this.selectedItem = {};
+      }
+      try {
+        const response = await axios.get(
+          `${fakeStoreUrl}/products/${id}`
+        );
+
+        if (response.status === 200) {
+          this.selectedItem = response.data;
         }
       } catch (error) {
         this.serverError = error;

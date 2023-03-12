@@ -3,6 +3,9 @@ import { computed, onUnmounted } from "vue";
 import imagePlaceholder from "@/assets/images/320x240.png";
 import { useCartStore } from "@/store/cart";
 import { useToast } from "primevue/usetoast";
+import { useI18n } from "vue-i18n";
+const { t, locale } = useI18n({ useScope: "global" });
+
 const toast = useToast();
 const { addItemToCart } = useCartStore();
 
@@ -35,7 +38,9 @@ onUnmounted(() => {
 <template>
   <div class="col-md-3 col-sm-6 col-xs-12">
     <div class="item">
-      <router-link to="/">
+      <router-link
+        :to="{ name: 'item', params: { locale: $i18n.locale, id: item.id } }"
+      >
         <div class="item__image-container">
           <img
             :src="item.image ?? imagePlaceholder"

@@ -38,6 +38,11 @@ export function setupRouter(i18n) {
           component: Main,
         },
         {
+          path: "item/:id?",
+          name: "item",
+          component: load("Item"),
+        },
+        {
           path: "contact",
           name: "contact",
           component: load("Contact"),

@@ -38,7 +38,7 @@ initShoppingCart();
       <div class="flex-fill me-2">
         {{ slotProps.message.summary }}
         <router-link
-          :to="{ name: 'cart', params: { locale: this.$i18n.locale } }"
+          :to="{ name: 'cart', params: { locale: $i18n.locale } }"
           class="ms-1"
         >
           Go to shopping cart
