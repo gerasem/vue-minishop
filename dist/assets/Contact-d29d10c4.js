@@ -1,0 +1,1 @@
+import{_ as t,o as a,g as o,a as c,t as n,q as s}from"./index-b391a787.js";const r={},l={class:"container-fluid flex-grow-1"};function _(e,i){return a(),o("main",l,[c("h1",null,n(e.$t("contact")),1),s(" Contact page ")])}const d=t(r,[["render",_]]);export{d as default};
