@@ -1,1 +1,0 @@
-import{_ as a,o,c as r,w as s,T as t,a as e}from"./index-b391a787.js";const c={},n=e("main",{class:"container-fluid flex-grow-1"},[e("h1",null,"Error 404")],-1);function _(l,i){return o(),r(t,null,{default:s(()=>[n]),_:1})}const d=a(c,[["render",_]]);export{d as default};
