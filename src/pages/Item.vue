@@ -30,11 +30,11 @@ const {
     >
       <h1>{{ selectedItem.title }}</h1>
 
-      <img
+      <!-- <img
         :src="selectedItem.image"
         :alt="selectedItem.title"
         style="width: 350px"
-      />
+      /> -->
       <pre>{{ selectedItem }}</pre>
     </main>
   </Transition>
